@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import javax.annotation.Resource;
 import javax.sql.DataSource;
 import java.sql.Connection;
+import java.util.Date;
 
 /**
  * @Author: zhangnan
@@ -36,4 +37,25 @@ public class TeacherServiceTest extends BaseTest {
         teacherInfo.setName("张三");
         iTeacherInfoService.saveBatch(Lists.newArrayList(teacherInfo));
     }
+
+    @Test
+    public void updateBatchTest(){
+        TeacherInfo teacherInfo = new TeacherInfo();
+        teacherInfo.setId(Long.parseLong("1"));
+        teacherInfo.setTeacherId("1111111");
+        teacherInfo.setName("张三");
+        teacherInfo.setHiredateTime(new Date());
+        iTeacherInfoService.updateBatchById(Lists.newArrayList(teacherInfo));
+    }
+
+    @Test
+    public void updateBatchByTeaIdTest(){
+        TeacherInfo teacherInfo = new TeacherInfo();
+        teacherInfo.setTeacherId("1111111");
+        teacherInfo.setName("李四");
+        teacherInfo.setHiredateTime(new Date());
+        teacherInfo.setAddress("甘肃省庆阳市西峰区北大街234号");
+        iTeacherInfoService.updateBatchByTeaId(Lists.newArrayList(teacherInfo));
+    }
+
 }
