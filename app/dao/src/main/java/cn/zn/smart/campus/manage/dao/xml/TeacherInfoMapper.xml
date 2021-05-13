@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.zn.smart.campus.manage.dao.mapper.TeacherInfoMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="cn.zn.smart.campus.manage.dao.po.TeacherInfo">
+        <result column="id" property="id" />
+        <result column="deleted" property="deleted" />
+        <result column="create_time" property="createTime" />
+        <result column="modified_time" property="modifiedTime" />
+        <result column="extra" property="extra" />
+        <result column="teacher_id" property="teacherId" />
+        <result column="name" property="name" />
+        <result column="phone_number" property="phoneNumber" />
+        <result column="id_number" property="idNumber" />
+        <result column="title" property="title" />
+        <result column="address" property="address" />
+        <result column="native_place" property="nativePlace" />
+        <result column="hiredate_time" property="hiredateTime" />
+        <result column="teach_subjects" property="teachSubjects" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id,
+        deleted,
+        create_time,
+        modified_time,
+        extra,
+        teacher_id, name, phone_number, id_number, title, address, native_place, hiredate_time, teach_subjects
+    </sql>
+
+</mapper>
