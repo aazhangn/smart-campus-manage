@@ -3,9 +3,9 @@ package dal.service;
 import base.BaseTest;
 import cn.zn.smart.campus.manage.dao.po.TeacherInfo;
 import cn.zn.smart.campus.manage.dao.service.ITeacherInfoService;
-import org.junit.Test;
 import com.alibaba.fastjson.JSON;
 import com.google.common.collect.Lists;
+import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.annotation.Resource;

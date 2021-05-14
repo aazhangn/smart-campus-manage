@@ -2,7 +2,6 @@ package cn.zn.smart.campus.manage.dao.mapper;
 
 import cn.zn.smart.campus.manage.dao.po.TeacherInfo;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import org.apache.ibatis.annotations.Mapper;
 
 /**
  * <p>

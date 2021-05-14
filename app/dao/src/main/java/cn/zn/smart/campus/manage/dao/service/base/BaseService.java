@@ -1,6 +1,5 @@
 package cn.zn.smart.campus.manage.dao.service.base;
 
-import cn.zn.smart.campus.manage.dao.po.TeacherInfo;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 import java.util.List;

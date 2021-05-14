@@ -1,4 +1,5 @@
 package cn.zn.smart.campus.manage.dao.service.base.impl;
+
 import cn.zn.smart.campus.manage.dao.exception.DaoException;
 import cn.zn.smart.campus.manage.dao.exception.ExceEnum;
 import cn.zn.smart.campus.manage.dao.service.base.BaseService;
@@ -8,13 +9,11 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import javafx.scene.layout.BackgroundSize;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 
 import java.lang.reflect.Field;
 import java.util.List;
-import java.util.TooManyListenersException;
 
 /**
  * @Description: 数据操作service父类实现
