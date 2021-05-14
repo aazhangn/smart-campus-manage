@@ -10,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.annotation.Resource;
 import javax.sql.DataSource;
-import java.sql.Connection;
 import java.util.Date;
 
 /**
@@ -26,7 +25,7 @@ public class TeacherServiceTest extends BaseTest {
 
     @Test
     public void getByIdTest(){
-        TeacherInfo teacherInfo = iTeacherInfoService.getById("1");
+        TeacherInfo teacherInfo = iTeacherInfoService.getByEntityId("1111111","teacherId");
         System.out.println(JSON.toJSONString(teacherInfo));
     }
 
@@ -51,11 +50,11 @@ public class TeacherServiceTest extends BaseTest {
     @Test
     public void updateBatchByTeaIdTest(){
         TeacherInfo teacherInfo = new TeacherInfo();
-        teacherInfo.setTeacherId("1111111");
+        teacherInfo.setTeacherId("");
         teacherInfo.setName("李四");
         teacherInfo.setHiredateTime(new Date());
-        teacherInfo.setAddress("甘肃省庆阳市西峰区北大街234号");
-        iTeacherInfoService.updateBatchByTeaId(Lists.newArrayList(teacherInfo));
+        teacherInfo.setAddress("甘肃省庆阳市西峰区北大街111号");
+        iTeacherInfoService.updateBatchByCondition(Lists.newArrayList(teacherInfo),"teacherId");
     }
 
 }

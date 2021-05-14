@@ -1,13 +1,14 @@
 package cn.zn.smart.campus.manage.dao.service.impl;
 
-import cn.zn.smart.campus.manage.dao.po.TeacherInfo;
 import cn.zn.smart.campus.manage.dao.mapper.TeacherInfoMapper;
+import cn.zn.smart.campus.manage.dao.po.TeacherInfo;
 import cn.zn.smart.campus.manage.dao.service.ITeacherInfoService;
-import com.baomidou.mybatisplus.core.conditions.Wrapper;
+import cn.zn.smart.campus.manage.dao.service.base.BaseService;
+import cn.zn.smart.campus.manage.dao.service.base.impl.BaseServiceImpl;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.baomidou.mybatisplus.core.conditions.segments.MergeSegments;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -21,15 +22,24 @@ import java.util.List;
  * @since 2021-05-13
  */
 @Service
-public class TeacherInfoServiceImpl extends ServiceImpl<TeacherInfoMapper, TeacherInfo> implements ITeacherInfoService {
+public class TeacherInfoServiceImpl extends BaseServiceImpl<TeacherInfoMapper, TeacherInfo> implements ITeacherInfoService {
 
-    @Override
-    public boolean updateBatchByTeaId(List<TeacherInfo> teacherInfoList) {
-        UpdateWrapper<TeacherInfo> wrapper = new UpdateWrapper<TeacherInfo>();
-        for (TeacherInfo tea:teacherInfoList) {
-            wrapper.eq("teacher_id",tea.getTeacherId());
-            this.update(tea,wrapper);
+    public boolean deleteBatchByTeaId(List<String> teacherIdList) {
+        QueryWrapper<TeacherInfo> wrapper = new QueryWrapper<>();
+        for (String teaId:teacherIdList) {
+            if (StringUtils.isBlank(teaId)){
+                continue;
+            }
+            wrapper.eq("teacher_id",teaId);
+            this.remove(wrapper);
         }
         return true;
+    }
+
+
+    public TeacherInfo getByTeaId(String teacherId) {
+        QueryWrapper<TeacherInfo> wrapper = new QueryWrapper<>();
+        wrapper.eq("teacher_id",teacherId);
+        return this.getOne(wrapper);
     }
 }

@@ -1,6 +1,7 @@
 package cn.zn.smart.campus.manage.dao.service;
 
 import cn.zn.smart.campus.manage.dao.po.TeacherInfo;
+import cn.zn.smart.campus.manage.dao.service.base.BaseService;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 import java.util.List;
@@ -14,13 +15,6 @@ import java.util.List;
  * @since 2021-05-13
  */
 
-public interface ITeacherInfoService extends IService<TeacherInfo> {
-
-    /**
-     * 根据teacher_id更新信息
-     * @param teacherInfoList
-     * @return
-     */
-    public boolean updateBatchByTeaId(List<TeacherInfo> teacherInfoList);
+public interface ITeacherInfoService extends BaseService<TeacherInfo> {
 
 }
