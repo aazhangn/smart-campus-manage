@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.zn.smart.campus.manage.dao.mapper.SecondHandGoodMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="cn.zn.smart.campus.manage.dao.po.SecondHandGood">
+        <result column="id" property="id" />
+        <result column="deleted" property="deleted" />
+        <result column="create_time" property="createTime" />
+        <result column="modified_time" property="modifiedTime" />
+        <result column="extra" property="extra" />
+        <result column="good_id" property="goodId" />
+        <result column="title" property="title" />
+        <result column="desc" property="desc" />
+        <result column="type" property="type" />
+        <result column="original_price" property="originalPrice" />
+        <result column="current_price" property="currentPrice" />
+        <result column="issue_student_id" property="issueStudentId" />
+        <result column="status" property="status" />
+        <result column="detail_pic_urls" property="detailPicUrls" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id,
+        deleted,
+        create_time,
+        modified_time,
+        extra,
+        good_id, title, desc, type, original_price, current_price, issue_student_id, status, detail_pic_urls
+    </sql>
+
+</mapper>

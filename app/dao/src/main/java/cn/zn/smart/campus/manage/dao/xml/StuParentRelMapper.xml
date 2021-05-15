@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.zn.smart.campus.manage.dao.mapper.StuParentRelMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="cn.zn.smart.campus.manage.dao.po.StuParentRel">
+        <result column="id" property="id" />
+        <result column="deleted" property="deleted" />
+        <result column="create_time" property="createTime" />
+        <result column="modified_time" property="modifiedTime" />
+        <result column="extra" property="extra" />
+        <result column="stu_par_rel_id" property="stuParRelId" />
+        <result column="student_id" property="studentId" />
+        <result column="parent_id" property="parentId" />
+        <result column="relationship_type" property="relationshipType" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id,
+        deleted,
+        create_time,
+        modified_time,
+        extra,
+        stu_par_rel_id, student_id, parent_id, relationship_type
+    </sql>
+
+</mapper>

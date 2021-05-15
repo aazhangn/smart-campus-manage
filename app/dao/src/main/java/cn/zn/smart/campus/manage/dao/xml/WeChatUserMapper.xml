@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.zn.smart.campus.manage.dao.mapper.WeChatUserMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="cn.zn.smart.campus.manage.dao.po.WeChatUser">
+        <result column="id" property="id" />
+        <result column="deleted" property="deleted" />
+        <result column="create_time" property="createTime" />
+        <result column="modified_time" property="modifiedTime" />
+        <result column="extra" property="extra" />
+        <result column="open_id" property="openId" />
+        <result column="phone_number" property="phoneNumber" />
+        <result column="nickname" property="nickname" />
+        <result column="head_pic_url" property="headPicUrl" />
+        <result column="gender" property="gender" />
+        <result column="role" property="role" />
+        <result column="map_id" property="mapId" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id,
+        deleted,
+        create_time,
+        modified_time,
+        extra,
+        open_id, phone_number, nickname, head_pic_url, gender, role, map_id
+    </sql>
+
+</mapper>

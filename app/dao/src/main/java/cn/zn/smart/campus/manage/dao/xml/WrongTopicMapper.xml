@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.zn.smart.campus.manage.dao.mapper.WrongTopicMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="cn.zn.smart.campus.manage.dao.po.WrongTopic">
+        <result column="id" property="id" />
+        <result column="deleted" property="deleted" />
+        <result column="create_time" property="createTime" />
+        <result column="modified_time" property="modifiedTime" />
+        <result column="extra" property="extra" />
+        <result column="wrong_topic_id" property="wrongTopicId" />
+        <result column="stu_ass_rel_id" property="stuAssRelId" />
+        <result column="type" property="type" />
+        <result column="mestery_status" property="mesteryStatus" />
+        <result column="assignment_id" property="assignmentId" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id,
+        deleted,
+        create_time,
+        modified_time,
+        extra,
+        wrong_topic_id, stu_ass_rel_id, type, mestery_status, assignment_id
+    </sql>
+
+</mapper>
