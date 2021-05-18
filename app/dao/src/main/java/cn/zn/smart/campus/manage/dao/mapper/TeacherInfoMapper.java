@@ -9,7 +9,7 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  * </p>
  *
  * @author zhangnan
- * @since 2021-05-13
+ * @since 2021-05-18
  */
 public interface TeacherInfoMapper extends BaseMapper<TeacherInfo> {
 
