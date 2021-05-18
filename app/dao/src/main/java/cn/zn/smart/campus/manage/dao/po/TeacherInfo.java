@@ -12,7 +12,7 @@ import java.util.Date;
  * </p>
  *
  * @author zhangnan
- * @since 2021-05-13
+ * @since 2021-05-18
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
@@ -46,6 +46,16 @@ public class TeacherInfo extends BaseLogicDeletePo {
     private String title;
 
     /**
+     * 聘用类型
+     */
+    private String hireType;
+
+    /**
+     * 所在教研组
+     */
+    private String teaResearchGroup;
+
+    /**
      * 地址
      */
     private String address;
@@ -58,7 +68,7 @@ public class TeacherInfo extends BaseLogicDeletePo {
     /**
      * 入职时间
      */
-    private Date hiredateTime;
+    private Date hiredate;
 
     /**
      * 教授科目

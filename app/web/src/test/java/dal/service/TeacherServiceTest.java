@@ -1,16 +1,14 @@
 package dal.service;
 
 import base.BaseTest;
+import cn.zn.smart.campus.manage.dao.page.QueryPage;
 import cn.zn.smart.campus.manage.dao.po.TeacherInfo;
 import cn.zn.smart.campus.manage.dao.service.ITeacherInfoService;
 import com.alibaba.fastjson.JSON;
 import com.google.common.collect.Lists;
 import org.junit.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.annotation.Resource;
-import javax.sql.DataSource;
-import java.util.Date;
 
 /**
  * @Author: zhangnan
@@ -20,8 +18,6 @@ public class TeacherServiceTest extends BaseTest {
 
     @Resource
     private ITeacherInfoService iTeacherInfoService;
-    @Autowired
-    DataSource dataSource;
 
     @Test
     public void getByIdTest(){
@@ -43,7 +39,6 @@ public class TeacherServiceTest extends BaseTest {
         teacherInfo.setId(Long.parseLong("1"));
         teacherInfo.setTeacherId("1111111");
         teacherInfo.setName("张三");
-        teacherInfo.setHiredateTime(new Date());
         iTeacherInfoService.updateBatchById(Lists.newArrayList(teacherInfo));
     }
 
@@ -52,9 +47,15 @@ public class TeacherServiceTest extends BaseTest {
         TeacherInfo teacherInfo = new TeacherInfo();
         teacherInfo.setTeacherId("");
         teacherInfo.setName("李四");
-        teacherInfo.setHiredateTime(new Date());
         teacherInfo.setAddress("甘肃省庆阳市西峰区北大街111号");
         iTeacherInfoService.updateBatchByCondition(Lists.newArrayList(teacherInfo),"teacherId");
     }
+
+    @Test
+    public void getTeacherListByPageTest(){
+        Object obj = iTeacherInfoService.getEntityListByPage(new QueryPage(1,2), null);
+        System.out.println(JSON.toJSONString(obj));
+    }
+
 
 }

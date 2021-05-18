@@ -1,4 +1,4 @@
-package cn.zn.smart.campus.manage.service.exception;
+package cn.zn.smart.campus.manage.biz.exception;
 
 /**
  * @Description: 自定义业务异常

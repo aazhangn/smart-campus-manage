@@ -1,11 +1,9 @@
 package cn.zn.smart.campus.manage.biz.service;
 
 import cn.zn.smart.campus.manage.biz.dto.ClassDto;
-import cn.zn.smart.campus.manage.biz.dto.TeacherDto;
 import cn.zn.smart.campus.manage.dao.page.QueryPage;
 import cn.zn.smart.campus.manage.dao.page.ResultPage;
 import cn.zn.smart.campus.manage.dao.po.ClassInfo;
-import cn.zn.smart.campus.manage.dao.po.TeacherInfo;
 
 import java.util.List;
 
@@ -14,13 +12,13 @@ import java.util.List;
  * @Author: zhangnan
  * @Date: 2021/05/18 16:02
  */
-public interface ClassInfoService {
+public interface ClassService {
     /**
      * 根据teaId获取所管理班级信息
-     * @param teaId
+     * @param classId
      * @return
      */
-    public List<ClassInfo> getClassListByTeaId(String teaId);
+    public List<ClassInfo> getClassListByTeaId(String classId);
 
     /**
      * 新增班级
@@ -41,22 +39,22 @@ public interface ClassInfoService {
      * @param classList
      * @return
      */
-    public boolean updateBatchByClaId(List<String> classList);
+    public boolean updateBatchByClaId(List<ClassDto> classList);
 
     /**
      * 根据classId获取详情
      * @param classId
      * @return
      */
-    public boolean getByClaId(String classId);
+    public ClassInfo getByClaId(String classId);
 
     /**
      * 条件分页查询
      * @param queryPage
-     * @param teacherDto
+     * @param classDto
      * @return
      * @throws IllegalAccessException
      */
-    public ResultPage<TeacherInfo> getListByPage(QueryPage queryPage, TeacherDto teacherDto) throws IllegalAccessException;
+    public ResultPage<ClassInfo> getListByPage(QueryPage queryPage,ClassDto classDto) throws IllegalAccessException;
 
 }

@@ -1,4 +1,4 @@
-package cn.zn.smart.campus.manage.service.exception;
+package cn.zn.smart.campus.manage.biz.exception;
 
 /**
  * @Description: 异常枚举
@@ -16,8 +16,10 @@ public enum ErrorEnum {
      * <p>
      * 后三位：错误码，000表示成功，逻辑错误从001往上加；系统相关从999往下减
      */
-    SUCCESS("SC-0000", "Success");
-
+    SUCCESS("SC-1000", "Success"),
+    SYS_PARAM_ERROR("SC-1001","非法参数"),
+    SYS_QUERY_DATA_IS_NULL("SC-1002","查询数据为空"),
+    SYS_ILLEGAL_OPERATION("SC-1999","非法操作");
     /**
      * 错误码
      */

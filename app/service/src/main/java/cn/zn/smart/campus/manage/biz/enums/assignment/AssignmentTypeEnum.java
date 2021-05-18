@@ -5,7 +5,7 @@ package cn.zn.smart.campus.manage.biz.enums.assignment;
  * @Author: zhangnan
  * @Date: 2021/05/18 21:35
  */
-public enum AssignmentType {
+public enum AssignmentTypeEnum {
     /**
      * 题型：第一位：0客观、1主观
      */
@@ -24,7 +24,7 @@ public enum AssignmentType {
      */
     private final String no;
 
-    AssignmentType(String value, String no) {
+    AssignmentTypeEnum(String value, String no) {
         this.value = value;
         this.no = no;
     }

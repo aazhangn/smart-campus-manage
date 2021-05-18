@@ -1,5 +1,7 @@
 package cn.zn.smart.campus.manage.dao.exception;
 
+import lombok.Data;
+
 import java.io.Serializable;
 
 /**
@@ -7,6 +9,7 @@ import java.io.Serializable;
  * @Author: zhangnan
  * @Date: 2021/05/14 20:17
  */
+@Data
 public class DaoException extends RuntimeException implements Serializable {
     private static final long serialVersionUID = 1482498248640632533L;
     private String code;

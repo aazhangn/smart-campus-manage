@@ -9,7 +9,7 @@ public enum ExceEnum {
     /**
      *
      */
-    SYS_PARAM_EXCE("SC-1001", "参数异常");
+    SYS_PARAM_EXCE("SC-0001", "参数异常");
     /**
      * 错误码
      */

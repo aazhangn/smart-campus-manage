@@ -64,6 +64,8 @@ public class CodeGenerator {
         // 自定义文件命名，注意 %s 会自动填充表实体属性！
         gc.setMapperName("%sMapper");
         gc.setXmlName("%sMapper");
+        //覆盖已有文件
+        gc.setFileOverride(true);
 
         // 数据源配置
         DataSourceConfig dsc = new DataSourceConfig();
@@ -116,6 +118,7 @@ public class CodeGenerator {
         strategy.setSuperEntityClass(SUPER_ENTITY_CLASS);
         strategy.setEntityLombokModel(true);
         strategy.setRestControllerStyle(true);
+
         // 写于父类中的公共字段
         strategy.setSuperEntityColumns("id", "extra", "deleted", "create_time", "modified_time");
         strategy.setInclude(scanner("表名，多个英文逗号分割").split(","));

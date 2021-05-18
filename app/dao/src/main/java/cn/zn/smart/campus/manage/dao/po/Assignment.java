@@ -10,7 +10,7 @@ import lombok.EqualsAndHashCode;
  * </p>
  *
  * @author zhangnan
- * @since 2021-05-15
+ * @since 2021-05-18
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
@@ -51,7 +51,7 @@ public class Assignment extends BaseLogicDeletePo {
     /**
      * 描述
      */
-    private String desc;
+    private String description;
 
     /**
      * 参考答案

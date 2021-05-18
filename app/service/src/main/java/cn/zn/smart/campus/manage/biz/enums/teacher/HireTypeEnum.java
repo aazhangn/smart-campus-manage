@@ -1,4 +1,9 @@
-package cn.zn.smart.campus.manage.biz.enums;
+package cn.zn.smart.campus.manage.biz.enums.teacher;
+
+import org.apache.commons.lang3.StringUtils;
+
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * @Description: 聘用类型枚举
@@ -9,11 +14,11 @@ public enum HireTypeEnum {
     /**
      * 编制
      */
-    PERMANENT("01","permanent"),
+    PERMANENT("01","编制"),
     /**
      * 合同制
      */
-    CONTRACT("02","contract");
+    CONTRACT("02","合同制");
 
     /**
      * 编号
@@ -23,6 +28,8 @@ public enum HireTypeEnum {
      * 描述
      */
     private final String desc;
+
+    private static List<HireTypeEnum> hireTypeEnums = Arrays.asList(values());
 
     HireTypeEnum(String no, String desc) {
         this.no = no;
@@ -35,6 +42,13 @@ public enum HireTypeEnum {
 
     public String getDesc() {
         return desc;
+    }
+
+    public static HireTypeEnum getByDesc(String desc){
+        if (StringUtils.isBlank(desc)){
+            return null;
+        }
+        return hireTypeEnums.stream().filter(p -> p.getDesc().equals(desc)).findFirst().orElse(null);
     }
 }
 

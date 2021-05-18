@@ -14,9 +14,11 @@
         <result column="phone_number" property="phoneNumber" />
         <result column="id_number" property="idNumber" />
         <result column="title" property="title" />
+        <result column="hire_type" property="hireType" />
+        <result column="tea_research_group" property="teaResearchGroup" />
         <result column="address" property="address" />
         <result column="native_place" property="nativePlace" />
-        <result column="hiredate_time" property="hiredateTime" />
+        <result column="hiredate" property="hiredate" />
         <result column="teach_subjects" property="teachSubjects" />
     </resultMap>
 
@@ -27,7 +29,7 @@
         create_time,
         modified_time,
         extra,
-        teacher_id, name, phone_number, id_number, title, address, native_place, hiredate_time, teach_subjects
+        teacher_id, name, phone_number, id_number, title, hire_type, tea_research_group, address, native_place, hiredate, teach_subjects
     </sql>
 
 </mapper>

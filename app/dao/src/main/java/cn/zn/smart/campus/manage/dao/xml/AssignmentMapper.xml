@@ -15,7 +15,7 @@
         <result column="subject" property="subject" />
         <result column="is_objective" property="isObjective" />
         <result column="type" property="type" />
-        <result column="desc" property="desc" />
+        <result column="description" property="description" />
         <result column="suggested_answer" property="suggestedAnswer" />
         <result column="teacher_id" property="teacherId" />
     </resultMap>
@@ -27,7 +27,7 @@
         create_time,
         modified_time,
         extra,
-        assignment_id, title, content, subject, is_objective, type, desc, suggested_answer, teacher_id
+        assignment_id, title, content, subject, is_objective, type, description, suggested_answer, teacher_id
     </sql>
 
 </mapper>
