@@ -10,7 +10,7 @@
         <result column="modified_time" property="modifiedTime" />
         <result column="extra" property="extra" />
         <result column="borrow_record_id" property="borrowRecordId" />
-        <result column="faility_id" property="failityId" />
+        <result column="facility_id" property="facilityId" />
         <result column="student_id" property="studentId" />
         <result column="borrow_time" property="borrowTime" />
         <result column="return_time" property="returnTime" />
@@ -23,7 +23,7 @@
         create_time,
         modified_time,
         extra,
-        borrow_record_id, faility_id, student_id, borrow_time, return_time
+        borrow_record_id, facility_id, student_id, borrow_time, return_time
     </sql>
 
 </mapper>

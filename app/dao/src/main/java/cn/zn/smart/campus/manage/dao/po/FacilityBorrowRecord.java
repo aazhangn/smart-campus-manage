@@ -1,9 +1,10 @@
 package cn.zn.smart.campus.manage.dao.po;
 
-import java.util.Date;
 import cn.zn.smart.campus.manage.dao.po.base.BaseLogicDeletePo;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+
+import java.util.Date;
 
 /**
  * <p>
@@ -27,7 +28,7 @@ public class FacilityBorrowRecord extends BaseLogicDeletePo {
     /**
      * 设施id
      */
-    private String failityId;
+    private String facilityId;
 
     /**
      * 学号

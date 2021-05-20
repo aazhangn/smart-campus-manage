@@ -95,9 +95,9 @@ public class AssignmentBizServiceImpl implements AssignmentBizService {
         return iAssignmentService.getEntityListByPage(queryPage, map);
     }
 
-    private List<Assignment> getAssignmentList(List<AssignmentDto> AssignmentDtoList) {
+    private List<Assignment> getAssignmentList(List<AssignmentDto> assignmentDtoList) {
         List<Assignment> list = new ArrayList<>();
-        for (AssignmentDto t : AssignmentDtoList) {
+        for (AssignmentDto t : assignmentDtoList) {
             Assignment temp = new Assignment();
             BeanUtils.copyProperties(t, temp);
             list.add(temp);
