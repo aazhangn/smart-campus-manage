@@ -10,7 +10,7 @@ import java.io.Serializable;
  * @Date: 2021/05/18 16:20
  */
 @Data
-public class ClassDto implements Serializable {
+public class ClassDTO implements Serializable {
     private static final long serialVersionUID = 2389950498724532705L;
 
     /**

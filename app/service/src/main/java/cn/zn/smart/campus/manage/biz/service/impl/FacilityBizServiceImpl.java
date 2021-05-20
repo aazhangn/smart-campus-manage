@@ -107,9 +107,9 @@ public class FacilityBizServiceImpl implements FacilityBizService {
         Map<String, Object> map = null;
         if (Objects.nonNull(facilityDTO)){
             //条件筛选：根据类型筛选
-            Facility queryAss = new Facility();
-            queryAss.setType(facilityDTO.getType());
-            map = ObjMapSwapUtil.objectToMap(queryAss);
+            Facility query = new Facility();
+            query.setType(facilityDTO.getType());
+            map = ObjMapSwapUtil.objectToMap(query);
         }
         return iFacilityService.getEntityListByPage(queryPage, map);
     }

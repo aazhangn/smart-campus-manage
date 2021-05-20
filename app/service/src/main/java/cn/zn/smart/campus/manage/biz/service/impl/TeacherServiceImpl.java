@@ -1,6 +1,6 @@
 package cn.zn.smart.campus.manage.biz.service.impl;
 
-import cn.zn.smart.campus.manage.biz.dto.TeacherDto;
+import cn.zn.smart.campus.manage.biz.dto.TeacherDTO;
 import cn.zn.smart.campus.manage.biz.exception.BizException;
 import cn.zn.smart.campus.manage.biz.exception.ErrorEnum;
 import cn.zn.smart.campus.manage.biz.service.TeacherService;
@@ -45,7 +45,7 @@ public class TeacherServiceImpl implements TeacherService {
     }
 
     @Override
-    public ResultPage<TeacherInfo> getTeacherListByPage(QueryPage page, TeacherDto teacherDto) throws IllegalAccessException {
+    public ResultPage<TeacherInfo> getTeacherListByPage(QueryPage page, TeacherDTO teacherDto) throws IllegalAccessException {
         if (Objects.isNull(page)) {
             throw new BizException(ErrorEnum.SYS_PARAM_ERROR);
         }
@@ -60,15 +60,15 @@ public class TeacherServiceImpl implements TeacherService {
     }
 
     @Override
-    public boolean updateBatchByTeaId(List<TeacherDto> teacherDtoList) {
-        if (CollectionUtils.isEmpty(teacherDtoList)) {
+    public boolean updateBatchByTeaId(List<TeacherDTO> teacherDTOList) {
+        if (CollectionUtils.isEmpty(teacherDTOList)) {
             throw new BizException(ErrorEnum.SYS_PARAM_ERROR);
         }
-        return iTeacherInfoService.updateBatchByCondition(this.getTeacherInfoList(teacherDtoList),"teacherId");
+        return iTeacherInfoService.updateBatchByCondition(this.getTeacherInfoList(teacherDTOList),"teacherId");
     }
 
     @Override
-    public boolean save(TeacherDto teacher) {
+    public boolean save(TeacherDTO teacher) {
         if (Objects.isNull(teacher)) {
             throw new BizException(ErrorEnum.SYS_PARAM_ERROR);
         }
@@ -89,12 +89,12 @@ public class TeacherServiceImpl implements TeacherService {
     /**
      * teacherInfo和teacherDro数组转换
      *
-     * @param teacherDtoList
+     * @param teacherDTOList
      * @return
      */
-    private List<TeacherInfo> getTeacherInfoList(List<TeacherDto> teacherDtoList) {
+    private List<TeacherInfo> getTeacherInfoList(List<TeacherDTO> teacherDTOList) {
         List<TeacherInfo> list = new ArrayList<>();
-        for (TeacherDto t : teacherDtoList) {
+        for (TeacherDTO t : teacherDTOList) {
             TeacherInfo temp = new TeacherInfo();
             BeanUtils.copyProperties(t, temp);
             list.add(temp);

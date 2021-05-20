@@ -1,14 +1,17 @@
 package cn.zn.smart.campus.manage.biz.util;
 
-import cn.zn.smart.campus.manage.biz.dto.ClassDto;
-import cn.zn.smart.campus.manage.biz.dto.TeacherDto;
+import cn.zn.smart.campus.manage.biz.dto.ClassDTO;
+import cn.zn.smart.campus.manage.biz.dto.StudentDTO;
+import cn.zn.smart.campus.manage.biz.dto.TeacherDTO;
 import cn.zn.smart.campus.manage.biz.enums.teacher.HireTypeEnum;
 import cn.zn.smart.campus.manage.biz.enums.teacher.TeaResearchGroupEnum;
 import cn.zn.smart.campus.manage.biz.exception.BizException;
 import cn.zn.smart.campus.manage.biz.exception.ErrorEnum;
 import cn.zn.smart.campus.manage.dao.po.ClassInfo;
+import cn.zn.smart.campus.manage.dao.po.Student;
 import cn.zn.smart.campus.manage.dao.po.TeacherInfo;
 import cn.zn.smart.campus.manage.dao.service.IClassInfoService;
+import cn.zn.smart.campus.manage.dao.service.IStudentService;
 import cn.zn.smart.campus.manage.dao.service.ITeacherInfoService;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.logging.log4j.util.Strings;
@@ -30,6 +33,8 @@ public class IdGeneratorUtil {
     private ITeacherInfoService iTeacherInfoService;
     @Autowired
     private IClassInfoService iClassInfoService;
+    @Autowired
+    private IStudentService iStudentService;
 
     public static IdGeneratorUtil idGeneratorUtil;
 
@@ -41,6 +46,7 @@ public class IdGeneratorUtil {
         idGeneratorUtil = this;
         idGeneratorUtil.iTeacherInfoService = this.iTeacherInfoService;
         idGeneratorUtil.iClassInfoService = this.iClassInfoService;
+        idGeneratorUtil.iStudentService = this.iStudentService;
     }
 
     /**
@@ -48,7 +54,7 @@ public class IdGeneratorUtil {
      * @param teacherDto
      * @return
      */
-    public static String getTeacherId(TeacherDto teacherDto) {
+    public static String getTeacherId(TeacherDTO teacherDto) {
         if (Objects.isNull(teacherDto) || StringUtils.isBlank(teacherDto.getHireType())) {
             throw new BizException(ErrorEnum.SYS_PARAM_ERROR);
         }
@@ -72,13 +78,20 @@ public class IdGeneratorUtil {
     /**
      * 生成班级id
      */
-    public static String getClassId(ClassDto classDto) {
+    public static String getClassId(ClassDTO classDto) {
         if (Objects.isNull(classDto)||StringUtils.isBlank(classDto.getGrade())||Strings.isBlank(classDto.getClassNo())){
             throw new BizException(ErrorEnum.SYS_PARAM_ERROR);
         }
         String prefix = classDto.getGrade()+classDto.getClassNo();
         String serialNo = getClaSerialNo(prefix);
         return prefix+serialNo;
+    }
+
+    public static String getStudentId(StudentDTO studentDTO) {
+        if (Objects.isNull(studentDTO)||StringUtils.isBlank(studentDTO.getClassId())){
+            throw new BizException(ErrorEnum.SYS_PARAM_ERROR);
+        }
+        return studentDTO.getClassId()+getStuSerialNo(studentDTO.getClassId());
     }
 
     /**
@@ -115,6 +128,17 @@ public class IdGeneratorUtil {
                 claIdPrefix,"classId");
         if (Objects.nonNull(classInfo)){
             String lastTeaSerialNo = classInfo.getClassId().substring(classInfo.getClassId().length()-2);
+            return String.format("%02d",Integer.parseInt(lastTeaSerialNo)+1);
+        }
+        //无数据，从01开始
+        return "01";
+    }
+
+    private static String getStuSerialNo(String stuIdPrefix){
+        Student student = idGeneratorUtil.iStudentService.getLastOneByIdPrefix(
+                stuIdPrefix,"studentId");
+        if (Objects.nonNull(student)){
+            String lastTeaSerialNo = student.getStudentId().substring(student.getStudentId().length()-2);
             return String.format("%02d",Integer.parseInt(lastTeaSerialNo)+1);
         }
         //无数据，从01开始

@@ -1,6 +1,6 @@
 package cn.zn.smart.campus.manage.biz.service.impl;
 
-import cn.zn.smart.campus.manage.biz.dto.ClassDto;
+import cn.zn.smart.campus.manage.biz.dto.ClassDTO;
 import cn.zn.smart.campus.manage.biz.exception.BizException;
 import cn.zn.smart.campus.manage.biz.exception.ErrorEnum;
 import cn.zn.smart.campus.manage.biz.service.ClassService;
@@ -52,7 +52,7 @@ public class ClassServiceImpl implements ClassService {
     }
 
     @Override
-    public boolean save(ClassDto classDto) {
+    public boolean save(ClassDTO classDto) {
         if (Objects.isNull(classDto)) {
             throw new BizException(ErrorEnum.SYS_PARAM_ERROR);
         }
@@ -74,7 +74,7 @@ public class ClassServiceImpl implements ClassService {
     }
 
     @Override
-    public boolean updateBatchByClaId(List<ClassDto> classList) {
+    public boolean updateBatchByClaId(List<ClassDTO> classList) {
         if (CollectionUtils.isEmpty(classList)) {
             throw new BizException(ErrorEnum.SYS_PARAM_ERROR);
         }
@@ -91,7 +91,7 @@ public class ClassServiceImpl implements ClassService {
     }
 
     @Override
-    public ResultPage<ClassInfo> getListByPage(QueryPage queryPage, ClassDto classDto) throws IllegalAccessException {
+    public ResultPage<ClassInfo> getListByPage(QueryPage queryPage, ClassDTO classDto) throws IllegalAccessException {
         if (Objects.isNull(queryPage)) {
             throw new BizException(ErrorEnum.SYS_PARAM_ERROR);
         }
@@ -106,9 +106,9 @@ public class ClassServiceImpl implements ClassService {
         return iClassInfoService.getEntityListByPage(queryPage, map);
     }
 
-    private List<ClassInfo> getClassInfoList(List<ClassDto> classDtoList) {
+    private List<ClassInfo> getClassInfoList(List<ClassDTO> classDTOList) {
         List<ClassInfo> list = new ArrayList<>();
-        for (ClassDto c : classDtoList) {
+        for (ClassDTO c : classDTOList) {
             ClassInfo temp = new ClassInfo();
             BeanUtils.copyProperties(c, temp);
             list.add(temp);

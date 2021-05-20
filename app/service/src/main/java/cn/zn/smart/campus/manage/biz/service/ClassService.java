@@ -1,6 +1,6 @@
 package cn.zn.smart.campus.manage.biz.service;
 
-import cn.zn.smart.campus.manage.biz.dto.ClassDto;
+import cn.zn.smart.campus.manage.biz.dto.ClassDTO;
 import cn.zn.smart.campus.manage.dao.page.QueryPage;
 import cn.zn.smart.campus.manage.dao.page.ResultPage;
 import cn.zn.smart.campus.manage.dao.po.ClassInfo;
@@ -25,7 +25,7 @@ public interface ClassService {
      * @param classDto
      * @return
      */
-    public boolean save(ClassDto classDto);
+    public boolean save(ClassDTO classDto);
 
     /**
      * 根据class_id批量删除
@@ -39,7 +39,7 @@ public interface ClassService {
      * @param classList
      * @return
      */
-    public boolean updateBatchByClaId(List<ClassDto> classList);
+    public boolean updateBatchByClaId(List<ClassDTO> classList);
 
     /**
      * 根据classId获取详情
@@ -55,6 +55,6 @@ public interface ClassService {
      * @return
      * @throws IllegalAccessException
      */
-    public ResultPage<ClassInfo> getListByPage(QueryPage queryPage,ClassDto classDto) throws IllegalAccessException;
+    public ResultPage<ClassInfo> getListByPage(QueryPage queryPage, ClassDTO classDto) throws IllegalAccessException;
 
 }

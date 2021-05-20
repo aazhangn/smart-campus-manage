@@ -1,7 +1,7 @@
 package web.service;
 
 import base.BaseTest;
-import cn.zn.smart.campus.manage.biz.dto.ClassDto;
+import cn.zn.smart.campus.manage.biz.dto.ClassDTO;
 import cn.zn.smart.campus.manage.biz.service.ClassService;
 import cn.zn.smart.campus.manage.dao.page.QueryPage;
 import com.alibaba.fastjson.JSON;
@@ -25,7 +25,7 @@ public class ClassServiceTest extends BaseTest {
 
     @Test
     public void saveTest(){
-        ClassDto classDto = new ClassDto();
+        ClassDTO classDto = new ClassDTO();
         classDto.setGrade("2017");
         classDto.setClassNo("01");
         classService.save(classDto);
@@ -38,7 +38,7 @@ public class ClassServiceTest extends BaseTest {
 
     @Test
     public void updateBatchTest(){
-        ClassDto classDto = new ClassDto();
+        ClassDTO classDto = new ClassDTO();
         classDto.setClassId("201706");
         classDto.setName("201706");
         classService.updateBatchByClaId(Lists.newArrayList(classDto));

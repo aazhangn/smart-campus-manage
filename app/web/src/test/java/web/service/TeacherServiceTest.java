@@ -1,7 +1,7 @@
 package web.service;
 
 import base.BaseTest;
-import cn.zn.smart.campus.manage.biz.dto.TeacherDto;
+import cn.zn.smart.campus.manage.biz.dto.TeacherDTO;
 import cn.zn.smart.campus.manage.biz.enums.teacher.HireTypeEnum;
 import cn.zn.smart.campus.manage.biz.enums.teacher.TeaResearchGroupEnum;
 import cn.zn.smart.campus.manage.biz.service.TeacherService;
@@ -23,7 +23,7 @@ public class TeacherServiceTest extends BaseTest {
 
     @Test
     public void getTeacherListByPageTest() throws IllegalAccessException {
-        TeacherDto teacherDto = new TeacherDto();
+        TeacherDTO teacherDto = new TeacherDTO();
         Object obj = teacherService.getTeacherListByPage(new QueryPage(1,3),teacherDto);
         System.out.println(JSON.toJSONString(obj));
     }
@@ -35,7 +35,7 @@ public class TeacherServiceTest extends BaseTest {
 
     @Test
     public void updateBatchTest(){
-        TeacherDto teacherDto = new TeacherDto();
+        TeacherDTO teacherDto = new TeacherDTO();
         teacherDto.setTeacherId("0101002");
         teacherDto.setName("李大毛");
         teacherService.updateBatchByTeaId(Lists.newArrayList(teacherDto));
@@ -43,7 +43,7 @@ public class TeacherServiceTest extends BaseTest {
 
     @Test
     public void saveTest(){
-        TeacherDto teacher = new TeacherDto();
+        TeacherDTO teacher = new TeacherDTO();
         teacher.setHireType(HireTypeEnum.PERMANENT.getDesc());
         teacher.setTeaResearchGroup(TeaResearchGroupEnum.JHS_CHINESE.getValue());
         teacher.setName("刘静");

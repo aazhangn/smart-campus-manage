@@ -11,7 +11,7 @@ import java.util.Date;
  * @Date: 2021/05/16 01:28
  */
 @Data
-public class TeacherDto implements Serializable {
+public class TeacherDTO implements Serializable {
 
     private static final long serialVersionUID = 1175636479685012395L;
     /**
