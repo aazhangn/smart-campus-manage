@@ -22,7 +22,7 @@ public class Result<T> implements Serializable {
     private T data;
 
     public Result(T data) {
-        this.requestId = MDC.get("traceID");
+        this.requestId = MDC.get("requestId");
         this.isSuccess = true;
         this.data = data;
         this.code = "SC-0000";
@@ -30,14 +30,14 @@ public class Result<T> implements Serializable {
     }
 
     public Result(boolean isSuccess, String code, String msg) {
-        this.requestId = MDC.get("traceID");
+        this.requestId = MDC.get("requestId");
         this.isSuccess = isSuccess;
         this.code = code;
         this.msg = msg;
     }
 
     public Result(boolean isSuccess, String code, String msg, T data) {
-        this.requestId = MDC.get("traceID");
+        this.requestId = MDC.get("requestId");
         this.isSuccess = isSuccess;
         this.code = code;
         this.msg = msg;

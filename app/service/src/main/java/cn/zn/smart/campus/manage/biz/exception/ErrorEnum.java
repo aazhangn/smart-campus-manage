@@ -19,7 +19,8 @@ public enum ErrorEnum {
     SUCCESS("SC-0000", "Success"),
     SYS_PARAM_ERROR("SC-1001","非法参数"),
     SYS_QUERY_DATA_IS_NULL("SC-1002","查询数据为空"),
-    SYS_ILLEGAL_OPERATION("SC-1003","非法操作");
+    SYS_ILLEGAL_OPERATION("SC-1003","非法操作"),
+    SYS_EXCEPTION("SC-1999","系统错误");
     /**
      * 错误码
      */
