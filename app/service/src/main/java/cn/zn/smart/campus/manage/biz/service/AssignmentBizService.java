@@ -1,6 +1,8 @@
 package cn.zn.smart.campus.manage.biz.service;
 
+import cn.zn.smart.campus.manage.biz.dto.AnswerDto;
 import cn.zn.smart.campus.manage.biz.dto.AssignmentDto;
+import cn.zn.smart.campus.manage.biz.param.AssignmentMarkParam;
 import cn.zn.smart.campus.manage.dao.page.QueryPage;
 import cn.zn.smart.campus.manage.dao.page.ResultPage;
 import cn.zn.smart.campus.manage.dao.po.Assignment;
@@ -52,5 +54,19 @@ public interface AssignmentBizService{
      */
     public ResultPage<Assignment> getListByPage(QueryPage queryPage, AssignmentDto assignmentDto)
             throws IllegalAccessException;
+
+    /**
+     * 作业答案提交
+     * @param answerDto
+     * @return
+     */
+    public boolean submitAnswer(AnswerDto answerDto);
+
+    /**
+     * 作业批改
+     * @param param
+     * @return
+     */
+    public boolean markAssignment(AssignmentMarkParam param);
 
 }

@@ -1,8 +1,10 @@
 package web.service;
 
 import base.BaseTest;
+import cn.zn.smart.campus.manage.biz.dto.AnswerDto;
 import cn.zn.smart.campus.manage.biz.dto.AssignmentDto;
 import cn.zn.smart.campus.manage.biz.enums.assignment.AssignmentTypeEnum;
+import cn.zn.smart.campus.manage.biz.param.AssignmentMarkParam;
 import cn.zn.smart.campus.manage.biz.service.AssignmentBizService;
 import cn.zn.smart.campus.manage.dao.page.QueryPage;
 import com.alibaba.fastjson.JSON;
@@ -51,5 +53,23 @@ public class AssignmentServiceTest extends BaseTest {
     @Test
     public void getByAssIdTest(){
         System.out.println(JSON.toJSONString(assignmentBizService.getByAssId("6000000261218547")));
+    }
+
+    @Test
+    public void subAnswerTest(){
+        AnswerDto answerDto = new AnswerDto();
+        answerDto.setAssignmentId("ass_6000000814295284");
+        answerDto.setStudentId("2017010102");
+        answerDto.setAnswer("1122");
+        assignmentBizService.submitAnswer(answerDto);
+    }
+
+    @Test
+    public void markAnswerTest(){
+        AssignmentMarkParam param = new AssignmentMarkParam();
+        param.setStuAssRelId("2017010102_ass_6000000814295284");
+        param.setScore(3.);
+        param.setExtra("较粗心");
+        assignmentBizService.markAssignment(param);
     }
 }
