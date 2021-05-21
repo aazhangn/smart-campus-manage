@@ -27,6 +27,10 @@ public class AssignmentDto implements Serializable {
      * 内容
      */
     private String content;
+    /**
+     * 分值
+     */
+    private Double score;
 
     /**
      * 所属科目

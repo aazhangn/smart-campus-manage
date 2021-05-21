@@ -34,6 +34,11 @@ public class Assignment extends BaseLogicDeletePo {
     private String content;
 
     /**
+     * 分值
+     */
+    private Double score;
+
+    /**
      * 所属科目
      */
     private String subject;
@@ -62,6 +67,4 @@ public class Assignment extends BaseLogicDeletePo {
      * 发布人工号
      */
     private String teacherId;
-
-
 }
