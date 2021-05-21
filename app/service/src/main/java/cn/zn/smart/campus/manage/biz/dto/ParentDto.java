@@ -1,6 +1,10 @@
 package cn.zn.smart.campus.manage.biz.dto;
 
+import cn.zn.smart.campus.manage.dao.po.StuParentRel;
 import lombok.Data;
+
+import java.io.Serializable;
+import java.util.List;
 
 /**
  * @Description:
@@ -8,9 +12,8 @@ import lombok.Data;
  * @Date: 2021/05/21 17:06
  */
 @Data
-public class ParentSaveDto {
-
-
+public class ParentDto implements Serializable {
+    private static final long serialVersionUID = 8413135638830986598L;
     /**
      * 家长id
      */
@@ -27,12 +30,7 @@ public class ParentSaveDto {
     private String phoneNumber;
 
     /**
-     * 学号
-     */
-    private String studentId;
-
-    /**
      * 亲子关系
      */
-    private String relationshipType;
+    private List<StuParentRel> rels;
 }
