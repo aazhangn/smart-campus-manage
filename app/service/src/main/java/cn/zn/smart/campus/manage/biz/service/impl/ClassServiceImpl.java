@@ -23,6 +23,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 /**
  * @Description:
@@ -106,6 +107,15 @@ public class ClassServiceImpl implements ClassService {
         return iClassInfoService.getEntityListByPage(queryPage, map);
     }
 
+    @Override
+    public List<String> getClassIdList() {
+        List<ClassInfo> classList  = iClassInfoService.list();
+        if (CollectionUtils.isEmpty(classList)){
+            return null;
+        }
+        return classList.stream().map(ClassInfo::getClassId).collect(Collectors.toList());
+    }
+
     private List<ClassInfo> getClassInfoList(List<ClassDTO> classDTOList) {
         List<ClassInfo> list = new ArrayList<>();
         for (ClassDTO c : classDTOList) {
@@ -115,4 +125,6 @@ public class ClassServiceImpl implements ClassService {
         }
         return list;
     }
+
+
 }

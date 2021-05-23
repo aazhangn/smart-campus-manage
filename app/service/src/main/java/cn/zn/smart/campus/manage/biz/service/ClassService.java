@@ -57,4 +57,9 @@ public interface ClassService {
      */
     public ResultPage<ClassInfo> getListByPage(QueryPage queryPage, ClassDTO classDto) throws IllegalAccessException;
 
+    /**
+     * 获取可用班级id列表
+     * @return
+     */
+    public List<String> getClassIdList();
 }

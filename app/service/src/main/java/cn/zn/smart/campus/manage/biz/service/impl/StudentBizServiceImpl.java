@@ -23,6 +23,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 /**
  * @Description:
@@ -92,6 +93,15 @@ public class StudentBizServiceImpl implements StudentBizService {
             map = ObjMapSwapUtil.objectToMap(query);
         }
         return iStudentService.getEntityListByPage(queryPage, map);
+    }
+
+    @Override
+    public List<String> getStuIdList() {
+        List<Student> studentList  = iStudentService.list();
+        if (CollectionUtils.isEmpty(studentList)){
+            return null;
+        }
+        return studentList.stream().map(Student::getStudentId).collect(Collectors.toList());
     }
 
     private List<Student> getStudentList(List<StudentDTO> studentDTOList) {

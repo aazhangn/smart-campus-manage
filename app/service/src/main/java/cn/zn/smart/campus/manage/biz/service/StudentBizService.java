@@ -53,4 +53,10 @@ public interface StudentBizService {
      */
     public ResultPage<Student> getListByPage(QueryPage queryPage, StudentDTO studentDTO)
             throws IllegalAccessException;
+
+    /**
+     * 获取学生学号列表
+     * @return
+     */
+    public List<String> getStuIdList();
 }
