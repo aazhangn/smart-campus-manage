@@ -18,6 +18,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
+import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
 import javax.annotation.Resource;
@@ -31,6 +32,7 @@ import java.util.Objects;
  * @Author: zhangnan
  * @Date: 2021/05/23 11:22
  */
+@Service
 public class NoticeBizServiceImpl implements NoticeBizService {
 
     @Resource
