@@ -69,7 +69,7 @@ public class IdGeneratorUtil {
                 teaResearchGroupNo = "0000";
             }
         } catch (IllegalArgumentException|NullPointerException e) {
-            throw new BizException(ErrorEnum.SYS_PARAM_ERROR);
+            throw new BizException(ErrorEnum.SYS_PARAM_ERROR.getCode(),"教研组信息有误");
         }
         String serialNo = getTeaSerialNo(hireTypeNo+teaResearchGroupNo);
         return hireTypeNo+teaResearchGroupNo+serialNo;

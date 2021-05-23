@@ -97,13 +97,14 @@ public abstract class BaseServiceImpl<M extends BaseMapper<T>, T> extends Servic
             throw new DaoException(ExceEnum.SYS_PARAM_EXCE.getCode(), "分页查询分页参数对象不能为空");
         }
         IPage<T> page = new Page<>(queryPage.getCurrent(), queryPage.getSize());
-        QueryWrapper<T> queryWrapper = null;
+        QueryWrapper<T> queryWrapper = new QueryWrapper<>();
         if (Objects.nonNull(queryMap) && !CollectionUtils.isEmpty(queryMap)) {
-            queryWrapper = new QueryWrapper<>();
             for (String str : queryMap.keySet()) {
                 queryWrapper.eq(StringTool.humpToLine(str), queryMap.get(str));
             }
         }
+        //根据创建时间逆序
+        queryWrapper.orderByDesc("create_time");
         ResultPage<T> resultPage = new ResultPage<>();
         BeanUtils.copyProperties(this.page(page, queryWrapper), resultPage);
         return resultPage;
@@ -113,6 +114,7 @@ public abstract class BaseServiceImpl<M extends BaseMapper<T>, T> extends Servic
     public T getLastOneByIdPrefix(String idPrefix, String entityIdFieldName) {
         QueryWrapper<T> queryWrapper = new QueryWrapper<>();
         queryWrapper.like(StringTool.humpToLine(entityIdFieldName), idPrefix + "%")
+                .or()
                 .orderByDesc(StringTool.humpToLine(entityIdFieldName));
         List<T> list = this.list(queryWrapper);
         if (CollectionUtils.isEmpty(list)) {

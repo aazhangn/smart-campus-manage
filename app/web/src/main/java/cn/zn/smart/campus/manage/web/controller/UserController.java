@@ -1,15 +1,20 @@
 package cn.zn.smart.campus.manage.web.controller;
 
 import cn.zn.smart.campus.manage.biz.dto.WeChatUserDTO;
+import cn.zn.smart.campus.manage.biz.exception.BizException;
+import cn.zn.smart.campus.manage.biz.exception.ErrorEnum;
 import cn.zn.smart.campus.manage.biz.service.UserService;
+import cn.zn.smart.campus.manage.dao.po.Administrator;
 import cn.zn.smart.campus.manage.dao.po.WeChatUser;
 import cn.zn.smart.campus.manage.web.config.MiniConfig;
+import cn.zn.smart.campus.manage.web.param.LoginParam;
+import cn.zn.smart.campus.manage.web.param.Tokens;
 import cn.zn.smart.campus.manage.web.result.Result;
+import cn.zn.smart.campus.manage.web.util.DoubleJWT;
 import cn.zn.smart.campus.manage.web.util.HttpUtil;
 import com.alibaba.fastjson.JSONObject;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -20,13 +25,16 @@ import java.util.Objects;
  * @Author: zhangnan
  * @Date: 2021/05/20 21:04
  */
-@RequestMapping("/api/user/manage")
+@CrossOrigin
+@RestController
+@RequestMapping("/api/user")
 public class UserController {
-
     @Resource
     private UserService userService;
+    @Autowired
+    private DoubleJWT jwt;
+
     @PostMapping("/weChat/login")
-    @ResponseBody
     public Result<JSONObject> loginWeChat(HttpServletRequest request) {
         String code =request.getParameter("code");
         JSONObject resultJson = new JSONObject();
@@ -63,5 +71,28 @@ public class UserController {
         //将用户信息保存到数据库中
         userService.updateWeChatUser(user);
         return null;
+    }
+
+    @PostMapping("/cms/login")
+    public Tokens loginCms(@RequestBody LoginParam param) {
+        try {
+            Administrator admi = userService.loginCms(param.getUsername(), param.getPassword());
+            if (Objects.nonNull(admi)) {
+                return jwt.generateTokens(admi.getAdministratorId());
+            }else {
+                throw new BizException(ErrorEnum.SYS_PARAM_ERROR);
+            }
+        } catch (Exception e){
+            throw e;
+        }
+    }
+
+    @GetMapping("/cms/get/info")
+    public Result<Administrator> getInfo(@RequestParam("administratorId") String adminId) {
+        try {
+            return Result.succeed(userService.getAdmin(adminId));
+        }catch (BizException e){
+            return Result.fail(e.getCode(), e.getMsg());
+        }
     }
 }

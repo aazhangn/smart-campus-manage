@@ -1,6 +1,5 @@
 package cn.zn.smart.campus.manage.dao.po.base;
 
-import com.baomidou.mybatisplus.annotation.TableLogic;
 import lombok.Data;
 
 /**
@@ -15,6 +14,5 @@ public abstract class BaseLogicDeletePo extends BasePo{
     /**
      * 是否删除
      */
-    @TableLogic
     private Integer deleted;
 }

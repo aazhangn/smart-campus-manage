@@ -6,13 +6,16 @@ import cn.zn.smart.campus.manage.biz.exception.BizException;
 import cn.zn.smart.campus.manage.biz.exception.ErrorEnum;
 import cn.zn.smart.campus.manage.biz.service.UserService;
 import cn.zn.smart.campus.manage.dao.po.Administrator;
+import cn.zn.smart.campus.manage.dao.po.TeacherInfo;
 import cn.zn.smart.campus.manage.dao.po.WeChatUser;
 import cn.zn.smart.campus.manage.dao.service.IAdministratorService;
+import cn.zn.smart.campus.manage.dao.service.ITeacherInfoService;
 import cn.zn.smart.campus.manage.dao.service.IWeChatUserService;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
+import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.Objects;
@@ -22,11 +25,14 @@ import java.util.Objects;
  * @Author: zhangnan
  * @Date: 2021/05/20 21:00
  */
+@Service
 public class UserServiceImpl implements UserService {
     @Resource
     private IWeChatUserService iWeChatUserService;
     @Resource
     private IAdministratorService iAdministratorService;
+    @Resource
+    private ITeacherInfoService iTeacherInfoService;
     @Override
     public WeChatUser isRegister(String openid) {
         if (StringUtils.isBlank(openid)){
@@ -53,14 +59,17 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public boolean loginCms(String username, String pwd) {
+    public Administrator loginCms(String username, String pwd) {
         if (StringUtils.isBlank(username)||StringUtils.isBlank(pwd)){
             throw new BizException(ErrorEnum.SYS_PARAM_ERROR);
         }
         QueryWrapper<Administrator> wrapper = new QueryWrapper<>();
-        wrapper.eq("username",username).eq("password",pwd);
+        wrapper.eq("username",username);
         Administrator admi = iAdministratorService.getOne(wrapper);
-        return !Objects.isNull(admi);
+        if (admi.getPassword().equals(pwd)){
+            return admi;
+        }
+        return null;
     }
 
     @Override
@@ -73,5 +82,34 @@ public class UserServiceImpl implements UserService {
         UpdateWrapper<Administrator> wrapper = new UpdateWrapper<>();
         wrapper.eq("administrator_id",adminiDTO.getAdministratorId());
         return iAdministratorService.update(administrator,wrapper);
+    }
+
+    @Override
+    public Administrator getAdmin(String adminId) {
+        if (StringUtils.isBlank(adminId)){
+            throw new BizException(ErrorEnum.SYS_PARAM_ERROR);
+        }
+        return iAdministratorService.getByEntityId(adminId,"administratorId");
+    }
+
+    @Override
+    public boolean saveAdmin(String teacherId) {
+        if (StringUtils.isBlank(teacherId)){
+            throw new BizException(ErrorEnum.SYS_PARAM_ERROR);
+        }
+        TeacherInfo teacherInfo = iTeacherInfoService.getByEntityId(teacherId,"teacherId");
+        if (Objects.isNull(teacherInfo)){
+            throw new BizException(ErrorEnum.SYS_QUERY_DATA_IS_NULL.getCode(),"该教师不存在");
+        }
+        Administrator admin = new Administrator();
+        admin.setTeacherId(teacherId);
+        //id
+        admin.setAdministratorId("admin_"+teacherId);
+        //职工号
+        admin.setUsername(teacherId);
+        //身份证后7-1位
+        admin.setPassword(teacherInfo.getIdNumber().substring(teacherInfo.getIdNumber().length()-7,
+                teacherInfo.getIdNumber().length()-1));
+        return iAdministratorService.save(admin);
     }
 }

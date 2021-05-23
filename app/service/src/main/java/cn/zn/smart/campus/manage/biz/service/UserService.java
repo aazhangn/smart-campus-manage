@@ -2,6 +2,7 @@ package cn.zn.smart.campus.manage.biz.service;
 
 import cn.zn.smart.campus.manage.biz.dto.AdminiDTO;
 import cn.zn.smart.campus.manage.biz.dto.WeChatUserDTO;
+import cn.zn.smart.campus.manage.dao.po.Administrator;
 import cn.zn.smart.campus.manage.dao.po.WeChatUser;
 
 /**
@@ -30,7 +31,7 @@ public interface UserService {
      * @param pwd
      * @return
      */
-    public boolean loginCms(String username, String pwd);
+    public Administrator loginCms(String username, String pwd);
 
     /**
      * 更新管理员信息
@@ -38,4 +39,18 @@ public interface UserService {
      * @return
      */
     public boolean updateAdmin(AdminiDTO adminiDTO);
+
+    /**
+     * 获取管理员信息
+     * @param adminId
+     * @return
+     */
+    public Administrator getAdmin(String adminId);
+
+    /**
+     * 添加管理员
+     * @param teacherId
+     * @return
+     */
+    public boolean saveAdmin(String teacherId);
 }
