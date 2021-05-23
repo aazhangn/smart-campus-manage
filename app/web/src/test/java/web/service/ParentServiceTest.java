@@ -2,10 +2,10 @@ package web.service;
 
 import base.BaseTest;
 import cn.zn.smart.campus.manage.biz.dto.ParentDto;
+import cn.zn.smart.campus.manage.biz.dto.StuParentRelDTO;
 import cn.zn.smart.campus.manage.biz.enums.parent.RelationshipTypeEnum;
 import cn.zn.smart.campus.manage.biz.service.ParentBizService;
 import cn.zn.smart.campus.manage.dao.page.QueryPage;
-import cn.zn.smart.campus.manage.dao.po.StuParentRel;
 import com.alibaba.fastjson.JSON;
 import org.assertj.core.util.Lists;
 import org.junit.Test;
@@ -25,7 +25,7 @@ public class ParentServiceTest extends BaseTest {
         ParentDto parentDto = new ParentDto();
         parentDto.setName("李大国");
         parentDto.setPhoneNumber("13266557788");
-        StuParentRel rel = new StuParentRel();
+        StuParentRelDTO rel = new StuParentRelDTO();
         rel.setStudentId("2017010102");
         rel.setRelationshipType(RelationshipTypeEnum.FATHER.getValue());
         parentDto.setRels(Lists.newArrayList(rel,rel));

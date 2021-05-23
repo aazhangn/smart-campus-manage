@@ -1,6 +1,7 @@
 package cn.zn.smart.campus.manage.biz.service.impl;
 
 import cn.zn.smart.campus.manage.biz.dto.ParentDto;
+import cn.zn.smart.campus.manage.biz.dto.StuParentRelDTO;
 import cn.zn.smart.campus.manage.biz.exception.BizException;
 import cn.zn.smart.campus.manage.biz.exception.ErrorEnum;
 import cn.zn.smart.campus.manage.biz.service.ParentBizService;
@@ -52,8 +53,9 @@ public class ParentBizServiceImpl implements ParentBizService {
         String parentId = "par_" + IdGeneratorUtil.getUUID();
         parent.setParentId(parentId);
         boolean flag = iParentService.save(parent);
+        List<StuParentRel> rels = new ArrayList<>();
         //设置id
-        for (StuParentRel rel : parentDto.getRels()) {
+        for (StuParentRelDTO rel : parentDto.getRels()) {
             if (Objects.isNull(iStudentService.getByEntityId(rel.getStudentId(), "studentId"))) {
                 log.error("添加学生家长关系失败:学号-{},家长id-{},msg-{}", parentDto.getParentId(), rel.getStudentId(),
                         ErrorEnum.SYS_QUERY_DATA_IS_NULL.getMsg());
@@ -61,10 +63,15 @@ public class ParentBizServiceImpl implements ParentBizService {
                 parentDto.getRels().remove(rel);
                 continue;
             }
-            rel.setParentId(parentId);
-            rel.setStuParRelId(rel.getStudentId() + "_" + parent.getParentId());
+            //关系初始化
+            StuParentRel temp = new StuParentRel();
+            temp.setStudentId(rel.getStudentId());
+            temp.setRelationshipType(rel.getRelationshipType());
+            temp.setParentId(parentId);
+            temp.setStuParRelId(rel.getStudentId() + "_" + parent.getParentId());
+            rels.add(temp);
         }
-        boolean flag2 = iStuParentRelService.saveBatch(parentDto.getRels());
+        boolean flag2 = iStuParentRelService.saveBatch(rels);
         return flag && flag2;
     }
 
@@ -101,8 +108,9 @@ public class ParentBizServiceImpl implements ParentBizService {
         //家长存在时，查询关系
         if (Objects.nonNull(parent)) {
             BeanUtils.copyProperties(parent, parentDto);
-            parentDto.setRels(iStuParentRelService.list(new QueryWrapper<StuParentRel>()
-                    .eq("parent_id", parentId)));
+            List<StuParentRel> rels = iStuParentRelService.list(new QueryWrapper<StuParentRel>()
+                    .eq("parent_id", parentId));
+            parentDto.setRels(this.getRelDtoList(rels));
             return parentDto;
         } else {
             return null;
@@ -120,7 +128,9 @@ public class ParentBizServiceImpl implements ParentBizService {
         for (Parent p : resultPage.getRecords()) {
             ParentDto temp = new ParentDto();
             BeanUtils.copyProperties(p, temp);
-            temp.setRels(iStuParentRelService.list(new QueryWrapper<StuParentRel>().eq("parent_id", p.getParentId())));
+            List<StuParentRel> rels = iStuParentRelService.list(new QueryWrapper<StuParentRel>()
+                    .eq("parent_id", p.getParentId()));
+            temp.setRels(this.getRelDtoList(rels));
             parentDtoList.add(temp);
         }
         //设置结果页
@@ -146,8 +156,24 @@ public class ParentBizServiceImpl implements ParentBizService {
             BeanUtils.copyProperties(parentDto, parent);
             parents.add(parent);
             if (Objects.nonNull(parentDto.getRels())) {
-                rels.addAll(parentDto.getRels());
+                for (StuParentRelDTO s:parentDto.getRels()){
+                    StuParentRel rel = new StuParentRel();
+                    BeanUtils.copyProperties(s,rel);
+                    rel.setParentId(parentDto.getParentId());
+                    rel.setStuParRelId(s.getStudentId()+"_"+parentDto.getParentId());
+                    rels.add(rel);
+                }
             }
         }
+    }
+
+    private List<StuParentRelDTO> getRelDtoList(List<StuParentRel> relList) {
+        List<StuParentRelDTO> list = new ArrayList<>();
+        for (StuParentRel t : relList) {
+            StuParentRelDTO temp = new StuParentRelDTO();
+            BeanUtils.copyProperties(t, temp);
+            list.add(temp);
+        }
+        return list;
     }
 }

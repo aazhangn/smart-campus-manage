@@ -1,6 +1,5 @@
 package cn.zn.smart.campus.manage.biz.dto;
 
-import cn.zn.smart.campus.manage.dao.po.StuParentRel;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -32,5 +31,5 @@ public class ParentDto implements Serializable {
     /**
      * 亲子关系
      */
-    private List<StuParentRel> rels;
+    private List<StuParentRelDTO> rels;
 }
