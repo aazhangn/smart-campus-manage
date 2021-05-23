@@ -5,6 +5,8 @@ import cn.zn.smart.campus.manage.biz.dto.WeChatUserDTO;
 import cn.zn.smart.campus.manage.biz.exception.BizException;
 import cn.zn.smart.campus.manage.biz.exception.ErrorEnum;
 import cn.zn.smart.campus.manage.biz.service.UserService;
+import cn.zn.smart.campus.manage.dao.page.QueryPage;
+import cn.zn.smart.campus.manage.dao.page.ResultPage;
 import cn.zn.smart.campus.manage.dao.po.Administrator;
 import cn.zn.smart.campus.manage.dao.po.TeacherInfo;
 import cn.zn.smart.campus.manage.dao.po.WeChatUser;
@@ -111,5 +113,21 @@ public class UserServiceImpl implements UserService {
         admin.setPassword(teacherInfo.getIdNumber().substring(teacherInfo.getIdNumber().length()-7,
                 teacherInfo.getIdNumber().length()-1));
         return iAdministratorService.save(admin);
+    }
+
+    @Override
+    public boolean deleteAdmin(String administratorId) {
+        if (StringUtils.isBlank(administratorId)) {
+            throw new BizException(ErrorEnum.SYS_PARAM_ERROR);
+        }
+        return iAdministratorService.remove(new QueryWrapper<Administrator>().eq("administrator_id",administratorId));
+    }
+
+    @Override
+    public ResultPage<Administrator> listAdmin(QueryPage page) {
+        if (Objects.isNull(page)) {
+            throw new BizException(ErrorEnum.SYS_PARAM_ERROR);
+        }
+        return iAdministratorService.getEntityListByPage(page, null);
     }
 }

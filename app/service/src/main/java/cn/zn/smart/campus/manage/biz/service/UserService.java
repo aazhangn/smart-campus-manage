@@ -2,6 +2,8 @@ package cn.zn.smart.campus.manage.biz.service;
 
 import cn.zn.smart.campus.manage.biz.dto.AdminiDTO;
 import cn.zn.smart.campus.manage.biz.dto.WeChatUserDTO;
+import cn.zn.smart.campus.manage.dao.page.QueryPage;
+import cn.zn.smart.campus.manage.dao.page.ResultPage;
 import cn.zn.smart.campus.manage.dao.po.Administrator;
 import cn.zn.smart.campus.manage.dao.po.WeChatUser;
 
@@ -53,4 +55,19 @@ public interface UserService {
      * @return
      */
     public boolean saveAdmin(String teacherId);
+
+    /**
+     * 删除管理员
+     * @param administratorId
+     * @return
+     */
+    public boolean deleteAdmin(String administratorId);
+
+    /**
+     * 分页查询
+     * @param page
+     * @return
+     */
+    public ResultPage<Administrator> listAdmin(QueryPage page);
+
 }
