@@ -11,7 +11,7 @@
         <result column="extra" property="extra" />
         <result column="good_id" property="goodId" />
         <result column="title" property="title" />
-        <result column="desc" property="desc" />
+        <result column="description" property="description" />
         <result column="type" property="type" />
         <result column="original_price" property="originalPrice" />
         <result column="current_price" property="currentPrice" />
@@ -27,7 +27,7 @@
         create_time,
         modified_time,
         extra,
-        good_id, title, desc, type, original_price, current_price, issue_student_id, status, detail_pic_urls
+        good_id, title, description, type, original_price, current_price, issue_student_id, status, detail_pic_urls
     </sql>
 
 </mapper>

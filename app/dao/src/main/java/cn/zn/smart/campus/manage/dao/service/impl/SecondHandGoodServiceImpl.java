@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
  * </p>
  *
  * @author zhangnan
- * @since 2021-05-15
+ * @since 2021-05-23
  */
 @Service
 public class SecondHandGoodServiceImpl extends BaseServiceImpl<SecondHandGoodMapper, SecondHandGood> implements ISecondHandGoodService {

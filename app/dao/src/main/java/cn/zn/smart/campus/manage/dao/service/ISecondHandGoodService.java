@@ -9,7 +9,7 @@ import cn.zn.smart.campus.manage.dao.service.base.BaseService;
  * </p>
  *
  * @author zhangnan
- * @since 2021-05-15
+ * @since 2021-05-23
  */
 public interface ISecondHandGoodService extends BaseService<SecondHandGood> {
 

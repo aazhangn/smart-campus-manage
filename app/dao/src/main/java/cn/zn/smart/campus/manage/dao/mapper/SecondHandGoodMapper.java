@@ -9,7 +9,7 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  * </p>
  *
  * @author zhangnan
- * @since 2021-05-15
+ * @since 2021-05-23
  */
 public interface SecondHandGoodMapper extends BaseMapper<SecondHandGood> {
 
