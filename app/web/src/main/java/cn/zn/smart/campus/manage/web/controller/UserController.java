@@ -82,9 +82,10 @@ public class UserController {
             }else {
                 throw new BizException(ErrorEnum.SYS_PARAM_ERROR);
             }
-        } catch (Exception e){
+        } catch (BizException e) {
             throw e;
         }
+
     }
 
     @GetMapping("/cms/get/info")
