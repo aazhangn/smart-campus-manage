@@ -13,6 +13,7 @@ import cn.zn.smart.campus.manage.dao.po.Student;
 import cn.zn.smart.campus.manage.dao.service.IClassInfoService;
 import cn.zn.smart.campus.manage.dao.service.IStudentService;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
@@ -102,6 +103,27 @@ public class StudentBizServiceImpl implements StudentBizService {
             return null;
         }
         return studentList.stream().map(Student::getStudentId).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<Student> getListByClassId(String classId) {
+        if (StringUtils.isBlank(classId)) {
+            throw new BizException(ErrorEnum.SYS_PARAM_ERROR);
+        }
+        ClassInfo classInfo = iClassInfoService.getByEntityId(classId,"classId");
+        if (Objects.isNull(classInfo)) {
+            throw new BizException(ErrorEnum.SYS_QUERY_DATA_IS_NULL.getCode(),"该班级不存在");
+        }
+        return iStudentService.list(new QueryWrapper<Student>().eq("class_id",classId));
+    }
+
+    @Override
+    public boolean resetClass(String studentId) {
+        if (StringUtils.isBlank(studentId)) {
+            throw new BizException(ErrorEnum.SYS_PARAM_ERROR);
+        }
+        return iStudentService.update(new UpdateWrapper<Student>().eq("student_id",studentId)
+                .set("class_id",null));
     }
 
     private List<Student> getStudentList(List<StudentDTO> studentDTOList) {

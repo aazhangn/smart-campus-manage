@@ -18,9 +18,9 @@ public enum TeaResearchGroupEnum {
      * </p>
      * 后两位：01语文、02数学、03英语....
      */
-    JHS_CHINESE("初中语文","2101"),
-    JHS_MATH("初中数学","2201"),
-    JHS_ENGLISH("初中英语","2103");
+    JHS_CHINESE("小学部","2101"),
+    JHS_MATH("初中部","2201"),
+    JHS_ENGLISH("高中部w","2103");
 
     /**
      * 描述

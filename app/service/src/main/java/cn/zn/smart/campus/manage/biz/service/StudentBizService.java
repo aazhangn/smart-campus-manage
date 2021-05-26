@@ -59,4 +59,20 @@ public interface StudentBizService {
      * @return
      */
     public List<String> getStuIdList();
+
+    /**
+     * 获取学生学号列表
+     * @param classId
+     * @return
+     */
+    public List<Student> getListByClassId(String classId);
+
+    /**
+     * 重置班级
+     * @param studentId
+     * @return
+     */
+    public boolean resetClass(String studentId);
+
+
 }

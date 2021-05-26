@@ -81,4 +81,22 @@ public class StudentController {
             return Result.fail(e.getCode(),e.getMsg());
         }
     }
+
+    @GetMapping("/list/byClassId")
+    public Result<List<Student>> getListByClassId(@RequestParam("classId")String classId){
+        try {
+            return Result.succeed(studentBizService.getListByClassId(classId));
+        }catch (BizException e){
+            return Result.fail(e.getCode(),e.getMsg());
+        }
+    }
+
+    @GetMapping("/reset/class")
+    public Result<Boolean> resetClass(@RequestParam("studentId")String studentId){
+        try {
+            return Result.succeed(studentBizService.resetClass(studentId));
+        }catch (BizException e){
+            return Result.fail(e.getCode(),e.getMsg());
+        }
+    }
 }

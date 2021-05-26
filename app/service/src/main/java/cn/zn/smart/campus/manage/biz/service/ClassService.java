@@ -15,10 +15,10 @@ import java.util.List;
 public interface ClassService {
     /**
      * 根据teaId获取所管理班级信息
-     * @param classId
+     * @param teacherId
      * @return
      */
-    public List<ClassInfo> getClassListByTeaId(String classId);
+    public List<ClassInfo> getClassListByTeaId(String teacherId);
 
     /**
      * 新增班级
@@ -62,4 +62,7 @@ public interface ClassService {
      * @return
      */
     public List<String> getClassIdList();
+
+
+
 }

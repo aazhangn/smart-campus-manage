@@ -81,4 +81,15 @@ public class ClassController {
             return Result.fail(e.getCode(),e.getMsg());
         }
     }
+
+    @GetMapping("/list/byTeaId")
+    public Result<List<ClassInfo>> listByTeaId(@RequestParam("teacherId") String teacherId){
+        try {
+            return Result.succeed(classService.getClassListByTeaId(teacherId));
+        }catch (BizException e){
+            return Result.fail(e.getCode(),e.getMsg());
+        }
+    }
+
+
 }
