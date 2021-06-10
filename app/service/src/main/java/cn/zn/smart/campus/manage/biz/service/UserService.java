@@ -1,11 +1,15 @@
 package cn.zn.smart.campus.manage.biz.service;
 
 import cn.zn.smart.campus.manage.biz.dto.AdminiDTO;
+import cn.zn.smart.campus.manage.biz.dto.UserDTO;
 import cn.zn.smart.campus.manage.biz.dto.WeChatUserDTO;
 import cn.zn.smart.campus.manage.dao.page.QueryPage;
 import cn.zn.smart.campus.manage.dao.page.ResultPage;
 import cn.zn.smart.campus.manage.dao.po.Administrator;
+import cn.zn.smart.campus.manage.dao.po.UserInfo;
 import cn.zn.smart.campus.manage.dao.po.WeChatUser;
+
+import java.util.List;
 
 /**
  * @Description:
@@ -70,4 +74,53 @@ public interface UserService {
      */
     public ResultPage<Administrator> listAdmin(QueryPage page);
 
+    /**
+     * 添加用户
+     * @param userDTO
+     * @return
+     */
+    public boolean save(UserDTO userDTO);
+
+    /**
+     * 根据对应角色id删除
+     * @param mapId
+     * @return
+     */
+    public boolean deleteByMapId(String mapId);
+
+    /**
+     * 根据mapId批量删除
+     * @param mapIdList
+     * @return
+     */
+    public boolean deleteByMapIds(List<String> mapIdList);
+
+
+    /**
+     * 更新信息
+     * @param username
+     * @param pwd
+     * @return
+     */
+    public UserInfo login(String username, String pwd);
+    /**
+     * 分页查询
+     * @param page
+     * @return
+     */
+    public ResultPage<UserInfo> listByPage(QueryPage page);
+
+    /**
+     * 更新信息
+     * @param userDTO
+     * @return
+     */
+    public boolean update(UserDTO userDTO);
+
+    /**
+     * 查询信息
+     * @param userId
+     * @return
+     */
+    public UserInfo get(String userId);
 }

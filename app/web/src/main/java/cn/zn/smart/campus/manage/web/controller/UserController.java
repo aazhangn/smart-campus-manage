@@ -1,10 +1,11 @@
 package cn.zn.smart.campus.manage.web.controller;
 
 import cn.zn.smart.campus.manage.biz.dto.WeChatUserDTO;
+import cn.zn.smart.campus.manage.biz.enums.user.UserRoleEnum;
 import cn.zn.smart.campus.manage.biz.exception.BizException;
 import cn.zn.smart.campus.manage.biz.exception.ErrorEnum;
 import cn.zn.smart.campus.manage.biz.service.UserService;
-import cn.zn.smart.campus.manage.dao.po.Administrator;
+import cn.zn.smart.campus.manage.dao.po.UserInfo;
 import cn.zn.smart.campus.manage.dao.po.WeChatUser;
 import cn.zn.smart.campus.manage.web.config.MiniConfig;
 import cn.zn.smart.campus.manage.web.param.LoginParam;
@@ -34,7 +35,7 @@ public class UserController {
     @Autowired
     private DoubleJWT jwt;
 
-    @PostMapping("/weChat/login")
+    @PostMapping("/login")
     public Result<JSONObject> loginWeChat(HttpServletRequest request) {
         String code =request.getParameter("code");
         JSONObject resultJson = new JSONObject();
@@ -74,24 +75,33 @@ public class UserController {
     }
 
     @PostMapping("/cms/login")
-    public Tokens loginCms(@RequestBody LoginParam param) {
-        try {
-            Administrator admi = userService.loginCms(param.getUsername(), param.getPassword());
-            if (Objects.nonNull(admi)) {
-                return jwt.generateTokens(admi.getAdministratorId());
-            }else {
-                throw new BizException(ErrorEnum.SYS_PARAM_ERROR);
+    public Tokens loginCms(@RequestBody LoginParam param) throws Exception {
+        try{
+            UserInfo userInfo  = userService.login(param.getUsername(), param.getPassword());
+            if (userInfo.getRole().equals(UserRoleEnum.ADMIN.getValue())) {
+                return jwt.generateTokens(userInfo.getUserId());
+            }else{
+                throw new BizException(ErrorEnum.SYS_PARAM_ERROR.getCode(),"非管理员无法登录");
             }
-        } catch (BizException e) {
-            throw e;
+        }catch (BizException e){
+            throw new Exception(e.getMsg());
         }
+    }
 
+
+    @PostMapping("weChat/login")
+    public Result<UserInfo> loginWeChat(@RequestBody LoginParam param) {
+        try {
+            return Result.succeed(userService.login(param.getUsername(),param.getPassword()));
+        }catch (BizException e){
+            return Result.fail(e.getCode(), e.getMsg());
+        }
     }
 
     @GetMapping("/cms/get/info")
-    public Result<Administrator> getInfo(@RequestParam("administratorId") String adminId) {
+    public Result<UserInfo> getInfo(@RequestParam("userId") String userId) {
         try {
-            return Result.succeed(userService.getAdmin(adminId));
+            return Result.succeed(userService.get(userId));
         }catch (BizException e){
             return Result.fail(e.getCode(), e.getMsg());
         }
