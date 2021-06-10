@@ -2,9 +2,12 @@ package cn.zn.smart.campus.manage.biz.service.impl;
 
 import cn.zn.smart.campus.manage.biz.dto.ParentDto;
 import cn.zn.smart.campus.manage.biz.dto.StuParentRelDTO;
+import cn.zn.smart.campus.manage.biz.dto.UserDTO;
+import cn.zn.smart.campus.manage.biz.enums.user.UserRoleEnum;
 import cn.zn.smart.campus.manage.biz.exception.BizException;
 import cn.zn.smart.campus.manage.biz.exception.ErrorEnum;
 import cn.zn.smart.campus.manage.biz.service.ParentBizService;
+import cn.zn.smart.campus.manage.biz.service.UserService;
 import cn.zn.smart.campus.manage.biz.util.IdGeneratorUtil;
 import cn.zn.smart.campus.manage.dao.page.QueryPage;
 import cn.zn.smart.campus.manage.dao.page.ResultPage;
@@ -42,8 +45,10 @@ public class ParentBizServiceImpl implements ParentBizService {
     private IStuParentRelService iStuParentRelService;
     @Resource
     private IStudentService iStudentService;
-
+    @Resource
+    private UserService userService;
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public boolean save(ParentDto parentDto) {
         if (Objects.isNull(parentDto) || CollectionUtils.isEmpty(parentDto.getRels())) {
             throw new BizException(ErrorEnum.SYS_PARAM_ERROR);
@@ -52,7 +57,7 @@ public class ParentBizServiceImpl implements ParentBizService {
         BeanUtils.copyProperties(parentDto, parent);
         String parentId = "par_" + IdGeneratorUtil.getUUID();
         parent.setParentId(parentId);
-        boolean flag = iParentService.save(parent);
+
         List<StuParentRel> rels = new ArrayList<>();
         //设置id
         for (StuParentRelDTO rel : parentDto.getRels()) {
@@ -71,6 +76,17 @@ public class ParentBizServiceImpl implements ParentBizService {
             temp.setStuParRelId(rel.getStudentId() + "_" + parent.getParentId());
             rels.add(temp);
         }
+        //添加用户信息
+        UserDTO userDTO = new UserDTO();
+        //密码为后6位
+        userDTO.setPassword( parent.getPhoneNumber().substring(parent.getPhoneNumber().length()-6));
+        userDTO.setRole(UserRoleEnum.PARENT.getValue());
+        userDTO.setUserMapId(parent.getParentId());
+        userDTO.setUsername(parent.getPhoneNumber());
+        userDTO.setUserId("user_"+parent.getPhoneNumber());
+        userService.save(userDTO);
+
+        boolean flag = iParentService.save(parent);
         boolean flag2 = iStuParentRelService.saveBatch(rels);
         return flag && flag2;
     }
@@ -80,6 +96,7 @@ public class ParentBizServiceImpl implements ParentBizService {
         if (CollectionUtils.isEmpty(parentIdList)) {
             throw new BizException(ErrorEnum.SYS_PARAM_ERROR);
         }
+        userService.deleteByMapIds(parentIdList);
         boolean flag = iParentService.deleteBatchByEntityId(parentIdList, "parentId");
         boolean flag2 = iStuParentRelService.deleteBatchByEntityId(parentIdList, "parentId");
         return flag && flag2;

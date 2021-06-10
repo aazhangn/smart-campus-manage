@@ -69,7 +69,7 @@ public class IdGeneratorUtil {
                 teaResearchGroupNo = "0000";
             }
         } catch (IllegalArgumentException|NullPointerException e) {
-            throw new BizException(ErrorEnum.SYS_PARAM_ERROR.getCode(),"教研组信息有误");
+            throw new BizException(ErrorEnum.SYS_PARAM_ERROR.getCode(),"教学部信息有误");
         }
         String serialNo = getTeaSerialNo(hireTypeNo+teaResearchGroupNo);
         return hireTypeNo+teaResearchGroupNo+serialNo;
@@ -112,6 +112,7 @@ public class IdGeneratorUtil {
                 teaIdPrefix,"teacherId");
         if (Objects.nonNull(teacherInfo)){
             String lastTeaSerialNo = teacherInfo.getTeacherId().substring(teacherInfo.getTeacherId().length()-3);
+            System.out.println("------"+String.format("%03d",Integer.parseInt(lastTeaSerialNo)+1));
             return String.format("%03d",Integer.parseInt(lastTeaSerialNo)+1);
         }
         //无数据，从001开始

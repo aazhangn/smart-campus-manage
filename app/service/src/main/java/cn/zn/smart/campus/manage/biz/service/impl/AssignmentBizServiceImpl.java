@@ -100,10 +100,11 @@ public class AssignmentBizServiceImpl implements AssignmentBizService {
         }
         Map<String, Object> map = null;
         if (Objects.nonNull(assignmentDto)){
-            //条件筛选：根据类型、科目筛选
+            //条件筛选：根据类型、科目、教师id筛选
             Assignment queryAss = new Assignment();
             queryAss.setType(assignmentDto.getType());
             queryAss.setSubject(assignmentDto.getSubject());
+            queryAss.setTeacherId(assignmentDto.getTeacherId());
             map = ObjMapSwapUtil.objectToMap(queryAss);
         }
         return iAssignmentService.getEntityListByPage(queryPage, map);
@@ -158,6 +159,23 @@ public class AssignmentBizServiceImpl implements AssignmentBizService {
         temp.setScore(param.getScore());
         temp.setStatus(AnswerStatusEnum.FINISH_MARK.getValue());
         return iStuAssRelService.update(temp,new UpdateWrapper<StuAssRel>().eq("stu_ass_rel_id",stuAssRel.getStuAssRelId()));
+    }
+
+    @Override
+    public List<Assignment> getAssListByTeaId(String teacherId) {
+        if (StringUtils.isBlank(teacherId)){
+            throw new BizException(ErrorEnum.SYS_PARAM_ERROR);
+        }
+        return iAssignmentService.list(new QueryWrapper<Assignment>().eq("teacher_id",teacherId)
+                .orderByDesc("create_time"));
+    }
+
+    @Override
+    public List<StuAssRel> getAnswerListByAssId(String assignmentId) {
+        if (StringUtils.isBlank(assignmentId)){
+            throw new BizException(ErrorEnum.SYS_PARAM_ERROR);
+        }
+        return iStuAssRelService.list(new QueryWrapper<StuAssRel>().eq("assignment_id",assignmentId));
     }
 
     private List<Assignment> getAssignmentList(List<AssignmentDto> assignmentDtoList) {

@@ -23,6 +23,7 @@ public class StudentServiceTest extends BaseTest {
         StudentDTO studentDTO = new StudentDTO();
         studentDTO.setName("李栋");
         studentDTO.setClassId("20170101");
+        studentDTO.setIdNumber("622021234598097809");
         studentDTO.setGender(1);
         studentDTO.setNativePalce("河南郑州");
         studentBizService.save(studentDTO);

@@ -1,9 +1,12 @@
 package cn.zn.smart.campus.manage.biz.service.impl;
 
 import cn.zn.smart.campus.manage.biz.dto.TeacherDTO;
+import cn.zn.smart.campus.manage.biz.dto.UserDTO;
+import cn.zn.smart.campus.manage.biz.enums.user.UserRoleEnum;
 import cn.zn.smart.campus.manage.biz.exception.BizException;
 import cn.zn.smart.campus.manage.biz.exception.ErrorEnum;
 import cn.zn.smart.campus.manage.biz.service.TeacherService;
+import cn.zn.smart.campus.manage.biz.service.UserService;
 import cn.zn.smart.campus.manage.biz.util.IdGeneratorUtil;
 import cn.zn.smart.campus.manage.biz.util.ObjMapSwapUtil;
 import cn.zn.smart.campus.manage.dao.page.QueryPage;
@@ -34,6 +37,8 @@ public class TeacherServiceImpl implements TeacherService {
 
     @Resource
     private ITeacherInfoService iTeacherInfoService;
+    @Resource
+    private UserService userService;
 
     @Override
     public TeacherInfo getByTeaId(String teaId) {
@@ -75,6 +80,14 @@ public class TeacherServiceImpl implements TeacherService {
         TeacherInfo teacherInfo = new TeacherInfo();
         BeanUtils.copyProperties(teacher, teacherInfo);
         teacherInfo.setTeacherId(IdGeneratorUtil.getTeacherId(teacher));
+        //添加用户信息
+        UserDTO userDTO = new UserDTO();
+        //密码为后7-1
+        userDTO.setPassword( teacherInfo.getIdNumber().substring( teacherInfo.getIdNumber().length()-7,
+                teacherInfo.getIdNumber().length()-1));
+        userDTO.setRole(UserRoleEnum.TEACHER.getValue());
+        userDTO.setUserMapId(teacherInfo.getTeacherId());
+        userService.save(userDTO);
         return iTeacherInfoService.save(teacherInfo);
     }
 
@@ -83,6 +96,7 @@ public class TeacherServiceImpl implements TeacherService {
         if (CollectionUtils.isEmpty(teaIdList)) {
             throw new BizException(ErrorEnum.SYS_PARAM_ERROR);
         }
+        userService.deleteByMapIds(teaIdList);
         return iTeacherInfoService.deleteBatchByEntityId(teaIdList,"teacherId");
     }
 

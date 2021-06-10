@@ -1,9 +1,12 @@
 package cn.zn.smart.campus.manage.biz.service.impl;
 
 import cn.zn.smart.campus.manage.biz.dto.StudentDTO;
+import cn.zn.smart.campus.manage.biz.dto.UserDTO;
+import cn.zn.smart.campus.manage.biz.enums.user.UserRoleEnum;
 import cn.zn.smart.campus.manage.biz.exception.BizException;
 import cn.zn.smart.campus.manage.biz.exception.ErrorEnum;
 import cn.zn.smart.campus.manage.biz.service.StudentBizService;
+import cn.zn.smart.campus.manage.biz.service.UserService;
 import cn.zn.smart.campus.manage.biz.util.IdGeneratorUtil;
 import cn.zn.smart.campus.manage.biz.util.ObjMapSwapUtil;
 import cn.zn.smart.campus.manage.dao.page.QueryPage;
@@ -37,6 +40,8 @@ public class StudentBizServiceImpl implements StudentBizService {
     private IClassInfoService iClassInfoService;
     @Resource
     private IStudentService iStudentService;
+    @Resource
+    private UserService userService;
     @Override
     public boolean save(StudentDTO studentDTO) {
         if (Objects.isNull(studentDTO)) {
@@ -52,6 +57,15 @@ public class StudentBizServiceImpl implements StudentBizService {
         Student student = new Student();
         BeanUtils.copyProperties(studentDTO, student);
         student.setStudentId(IdGeneratorUtil.getStudentId(studentDTO));
+
+        //添加用户信息
+        UserDTO userDTO = new UserDTO();
+        //密码为后7-1
+        userDTO.setPassword( student.getIdNumber().substring( student.getIdNumber().length()-7,
+                student.getIdNumber().length()-1));
+        userDTO.setRole(UserRoleEnum.STUDENT.getValue());
+        userDTO.setUserMapId(student.getStudentId());
+        userService.save(userDTO);
         return iStudentService.save(student);
     }
 
@@ -70,6 +84,7 @@ public class StudentBizServiceImpl implements StudentBizService {
         if (CollectionUtils.isEmpty(studentIdList)){
             throw new BizException(ErrorEnum.SYS_PARAM_ERROR);
         }
+        userService.deleteByMapIds(studentIdList);
         return iStudentService.deleteBatchByEntityId(studentIdList,"studentId");
     }
 

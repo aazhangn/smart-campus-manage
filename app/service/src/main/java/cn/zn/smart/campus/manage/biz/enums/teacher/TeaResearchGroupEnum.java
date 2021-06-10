@@ -12,15 +12,10 @@ import java.util.List;
  */
 public enum TeaResearchGroupEnum {
     /**
-     * 第一位：1小学、2初中、3高中
-     * <p>
-     * 第二位：1文科、2理科
-     * </p>
-     * 后两位：01语文、02数学、03英语....
      */
-    JHS_CHINESE("小学部","2101"),
-    JHS_MATH("初中部","2201"),
-    JHS_ENGLISH("高中部w","2103");
+    PS("小学部","1001"),
+    JHS("初中部","1002"),
+    SHS("高中部w","1003");
 
     /**
      * 描述

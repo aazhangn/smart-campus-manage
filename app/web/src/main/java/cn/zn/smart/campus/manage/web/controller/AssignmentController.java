@@ -8,6 +8,7 @@ import cn.zn.smart.campus.manage.biz.param.AssignmentMarkParam;
 import cn.zn.smart.campus.manage.biz.service.AssignmentBizService;
 import cn.zn.smart.campus.manage.dao.page.ResultPage;
 import cn.zn.smart.campus.manage.dao.po.Assignment;
+import cn.zn.smart.campus.manage.dao.po.StuAssRel;
 import cn.zn.smart.campus.manage.web.param.PageParam;
 import cn.zn.smart.campus.manage.web.result.Result;
 import com.google.common.collect.Lists;
@@ -31,6 +32,23 @@ public class AssignmentController {
     public Result<Assignment> getOne(@RequestParam("assignmentId")String assignmentId){
         try {
             return Result.succeed(assignmentBizService.getByAssId(assignmentId));
+        }catch (BizException e){
+            return Result.fail(e.getCode(),e.getMsg());
+        }
+    }
+    @GetMapping("/list/byTeaId")
+    public Result<List<Assignment>> getListByTeaId(@RequestParam("teacherId")String teacherId){
+        try {
+            return Result.succeed(assignmentBizService.getAssListByTeaId(teacherId));
+        }catch (BizException e){
+            return Result.fail(e.getCode(),e.getMsg());
+        }
+    }
+
+    @GetMapping("/answer/list/byAssId")
+    public Result<List<StuAssRel>> getAnswerListByAssId(@RequestParam("assignmentId")String assignmentId){
+        try {
+            return Result.succeed(assignmentBizService.getAnswerListByAssId(assignmentId));
         }catch (BizException e){
             return Result.fail(e.getCode(),e.getMsg());
         }

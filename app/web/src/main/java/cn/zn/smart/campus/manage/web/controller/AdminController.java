@@ -5,7 +5,7 @@ import cn.zn.smart.campus.manage.biz.exception.BizException;
 import cn.zn.smart.campus.manage.biz.service.UserService;
 import cn.zn.smart.campus.manage.dao.page.QueryPage;
 import cn.zn.smart.campus.manage.dao.page.ResultPage;
-import cn.zn.smart.campus.manage.dao.po.Administrator;
+import cn.zn.smart.campus.manage.dao.po.UserInfo;
 import cn.zn.smart.campus.manage.web.result.Result;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,9 +23,9 @@ public class AdminController {
     private UserService userService;
 
     @PostMapping("/page/list")
-    public Result<ResultPage<Administrator>> listByPage(@RequestBody QueryPage param) {
+    public Result<ResultPage<UserInfo>> listByPage(@RequestBody QueryPage param) {
         try {
-            return Result.succeed(userService.listAdmin(param));
+            return Result.succeed(userService.listByPage(param));
         } catch (BizException e) {
             return Result.fail(e.getCode(), e.getMsg());
         }

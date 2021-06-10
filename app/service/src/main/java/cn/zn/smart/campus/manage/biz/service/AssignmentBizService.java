@@ -6,6 +6,7 @@ import cn.zn.smart.campus.manage.biz.param.AssignmentMarkParam;
 import cn.zn.smart.campus.manage.dao.page.QueryPage;
 import cn.zn.smart.campus.manage.dao.page.ResultPage;
 import cn.zn.smart.campus.manage.dao.po.Assignment;
+import cn.zn.smart.campus.manage.dao.po.StuAssRel;
 
 import java.util.List;
 
@@ -68,5 +69,20 @@ public interface AssignmentBizService{
      * @return
      */
     public boolean markAssignment(AssignmentMarkParam param);
+
+    /**
+     * 根据老师id查询作业
+     * @param teacherId
+     * @return
+     */
+    public List<Assignment> getAssListByTeaId(String teacherId);
+
+
+    /**
+     * 查询答题情况
+     * @param assignmentId
+     * @return
+     */
+    public List<StuAssRel> getAnswerListByAssId(String assignmentId);
 
 }

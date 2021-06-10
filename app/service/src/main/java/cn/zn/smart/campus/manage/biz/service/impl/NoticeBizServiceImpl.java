@@ -50,8 +50,10 @@ public class NoticeBizServiceImpl implements NoticeBizService {
         if (Objects.isNull(param)|| StringUtils.isBlank(param.getScope())){
             param = new NoticeReceiveParam();
             param.setScope(ReceiveScopeEnum.ALL.getValue());
+        }else{
+            notice.setNoticeReceiveParam(JSON.toJSONString(param));
         }
-        notice.setNoticeReceiveParam(JSON.toJSONString(param));
+
         return iNoticeService.save(notice);
     }
 

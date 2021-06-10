@@ -45,7 +45,8 @@ public class TeacherServiceTest extends BaseTest {
     public void saveTest(){
         TeacherDTO teacher = new TeacherDTO();
         teacher.setHireType(HireTypeEnum.PERMANENT.getDesc());
-        teacher.setTeaResearchGroup(TeaResearchGroupEnum.JHS_CHINESE.getValue());
+        teacher.setIdNumber("622809778868095698");
+        teacher.setTeaResearchGroup(TeaResearchGroupEnum.JHS.getValue());
         teacher.setName("刘静");
         teacherService.save(teacher);
     }

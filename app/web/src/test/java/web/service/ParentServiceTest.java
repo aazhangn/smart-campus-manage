@@ -1,9 +1,11 @@
 package web.service;
 
 import base.BaseTest;
+import cn.zn.smart.campus.manage.biz.dto.NoticeDTO;
 import cn.zn.smart.campus.manage.biz.dto.ParentDto;
 import cn.zn.smart.campus.manage.biz.dto.StuParentRelDTO;
 import cn.zn.smart.campus.manage.biz.enums.parent.RelationshipTypeEnum;
+import cn.zn.smart.campus.manage.biz.service.NoticeBizService;
 import cn.zn.smart.campus.manage.biz.service.ParentBizService;
 import cn.zn.smart.campus.manage.dao.page.QueryPage;
 import com.alibaba.fastjson.JSON;
@@ -20,6 +22,14 @@ import javax.annotation.Resource;
 public class ParentServiceTest extends BaseTest {
     @Resource
     private ParentBizService parentBizService;
+    @Resource
+    private NoticeBizService noticeBizService;
+
+    @Test
+    public void save(){
+        NoticeDTO noticeDTO = new NoticeDTO();
+        noticeBizService.save(noticeDTO);
+    }
     @Test
     public void saveTest(){
         ParentDto parentDto = new ParentDto();
@@ -28,7 +38,7 @@ public class ParentServiceTest extends BaseTest {
         StuParentRelDTO rel = new StuParentRelDTO();
         rel.setStudentId("2017010102");
         rel.setRelationshipType(RelationshipTypeEnum.FATHER.getValue());
-        parentDto.setRels(Lists.newArrayList(rel,rel));
+        parentDto.setRels(Lists.newArrayList(rel));
         parentBizService.save(parentDto);
     }
 
