@@ -109,9 +109,10 @@ public class SecondHandGoodBizServiceImpl implements SecondHandGoodBizService {
         }
         Map<String, Object> map = null;
         if (Objects.nonNull(goodDTO)){
-            //条件筛选：根据类型筛选
+            //条件筛选：根据类型、发布人筛选
             SecondHandGood query = new SecondHandGood();
             query.setType(goodDTO.getType());
+            query.setIssueStudentId(goodDTO.getIssueStudentId());
             map = ObjMapSwapUtil.objectToMap(query);
         }
         return iSecondHandGoodService.getEntityListByPage(queryPage, map);
