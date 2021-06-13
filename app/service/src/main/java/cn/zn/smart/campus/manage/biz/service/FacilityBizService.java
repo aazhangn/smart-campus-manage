@@ -28,6 +28,12 @@ public interface FacilityBizService {
      */
     public Facility getByFacId(String facilityId);
 
+    /**
+     * 获取所有设施信息
+     * @return
+     */
+    public List<Facility> getAll();
+
 
     /**
      * 根据class_id批量删除
@@ -68,5 +74,6 @@ public interface FacilityBizService {
      * @return
      */
     public boolean returnFacility(String facilityId);
+
 
 }

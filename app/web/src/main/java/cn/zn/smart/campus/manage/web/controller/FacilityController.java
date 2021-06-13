@@ -6,13 +6,17 @@ import cn.zn.smart.campus.manage.biz.exception.ErrorEnum;
 import cn.zn.smart.campus.manage.biz.service.FacilityBizService;
 import cn.zn.smart.campus.manage.dao.page.ResultPage;
 import cn.zn.smart.campus.manage.dao.po.Facility;
+import cn.zn.smart.campus.manage.web.param.FacilityBorrowParam;
 import cn.zn.smart.campus.manage.web.param.PageParam;
 import cn.zn.smart.campus.manage.web.result.Result;
 import com.google.common.collect.Lists;
+import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * @Description:
@@ -71,4 +75,38 @@ public class FacilityController {
             return Result.fail(e.getCode(),e.getMsg());
         }
     }
+
+    @PostMapping("/borrow")
+    public Result<Boolean> borrow(@RequestBody FacilityBorrowParam param){
+        try {
+            return Result.succeed(facilityBizService.borrowFacility(param.getFacilityId(), param.getStudentId()));
+        }catch (BizException e){
+            return Result.fail(e.getCode(),e.getMsg());
+        }
+    }
+
+    @GetMapping("/return")
+    public Result<Boolean> returnFacility(@RequestParam("facilityId")String facilityId){
+        try {
+            return Result.succeed(facilityBizService.returnFacility(facilityId));
+        }catch (BizException e){
+            return Result.fail(e.getCode(),e.getMsg());
+        }
+    }
+
+    @GetMapping("/getAll")
+    public Result<Map<String,List<Facility>>> getAll(){
+        try {
+            List<Facility> list = facilityBizService.getAll();
+            if (CollectionUtils.isEmpty(list)){
+                return Result.succeed(null);
+            }else{
+                Map<String,List<Facility>> map =  list.stream().collect(Collectors.groupingBy(Facility::getType));
+                return Result.succeed(map);
+            }
+        }catch (BizException e){
+            return Result.fail(e.getCode(),e.getMsg());
+        }
+    }
+
 }

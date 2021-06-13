@@ -74,6 +74,11 @@ public class FacilityBizServiceImpl implements FacilityBizService {
     }
 
     @Override
+    public List<Facility> getAll() {
+        return iFacilityService.list();
+    }
+
+    @Override
     public boolean deleteBatchByFacId(List<String> facilityIdList) {
         if (CollectionUtils.isEmpty(facilityIdList)){
             throw new BizException(ErrorEnum.SYS_PARAM_ERROR);
