@@ -1,10 +1,13 @@
 package cn.zn.smart.campus.manage.web.controller;
 
+import cn.zn.smart.campus.manage.biz.dto.UserDTO;
 import cn.zn.smart.campus.manage.biz.dto.WeChatUserDTO;
 import cn.zn.smart.campus.manage.biz.enums.user.UserRoleEnum;
 import cn.zn.smart.campus.manage.biz.exception.BizException;
 import cn.zn.smart.campus.manage.biz.exception.ErrorEnum;
 import cn.zn.smart.campus.manage.biz.service.UserService;
+import cn.zn.smart.campus.manage.dao.page.QueryPage;
+import cn.zn.smart.campus.manage.dao.page.ResultPage;
 import cn.zn.smart.campus.manage.dao.po.UserInfo;
 import cn.zn.smart.campus.manage.dao.po.WeChatUser;
 import cn.zn.smart.campus.manage.web.config.MiniConfig;
@@ -103,6 +106,51 @@ public class UserController {
         try {
             return Result.succeed(userService.get(userId));
         }catch (BizException e){
+            return Result.fail(e.getCode(), e.getMsg());
+        }
+    }
+
+    @GetMapping("/set/role/admin")
+    public Result<Boolean> setRoleIsAdmin(@RequestParam("userId") String userId) {
+        try {
+            return Result.succeed(userService.setRoleIsAdmin(userId));
+        }catch (BizException e){
+            return Result.fail(e.getCode(), e.getMsg());
+        }
+    }
+
+    @PostMapping("/page/list")
+    public Result<ResultPage<UserInfo>> listByPage(@RequestBody QueryPage param) {
+        try {
+            return Result.succeed(userService.listByPage(param));
+        } catch (BizException e) {
+            return Result.fail(e.getCode(), e.getMsg());
+        }
+    }
+
+    @PostMapping("/update")
+    public Result<Boolean> update(@RequestBody UserDTO user){
+        try {
+            return Result.succeed(userService.update(user));
+        }catch (BizException e){
+            return Result.fail(e.getCode(),e.getMsg());
+        }
+    }
+
+    @GetMapping("/save")
+    public Result<Boolean> save(@RequestParam("teacherId") String teacherId) {
+        try {
+            return Result.succeed(userService.saveAdmin(teacherId));
+        } catch (BizException e) {
+            return Result.fail(e.getCode(), e.getMsg());
+        }
+    }
+
+    @GetMapping("/delete")
+    public Result<Boolean> delete(@RequestParam("userId") String userId) {
+        try {
+            return Result.succeed(userService.delete(userId));
+        } catch (BizException e) {
             return Result.fail(e.getCode(), e.getMsg());
         }
     }

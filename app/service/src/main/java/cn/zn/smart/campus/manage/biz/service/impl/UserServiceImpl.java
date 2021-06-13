@@ -3,6 +3,7 @@ package cn.zn.smart.campus.manage.biz.service.impl;
 import cn.zn.smart.campus.manage.biz.dto.AdminiDTO;
 import cn.zn.smart.campus.manage.biz.dto.UserDTO;
 import cn.zn.smart.campus.manage.biz.dto.WeChatUserDTO;
+import cn.zn.smart.campus.manage.biz.enums.user.UserRoleEnum;
 import cn.zn.smart.campus.manage.biz.exception.BizException;
 import cn.zn.smart.campus.manage.biz.exception.ErrorEnum;
 import cn.zn.smart.campus.manage.biz.service.UserService;
@@ -162,11 +163,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public boolean deleteByMapId(String mapId) {
-        if (StringUtils.isBlank(mapId)){
+    public boolean delete(String userId) {
+        if (StringUtils.isBlank(userId)){
             throw new BizException(ErrorEnum.SYS_PARAM_ERROR);
         }
-        return iUserInfoService.remove(new QueryWrapper<UserInfo>().eq("user_map_id",mapId));
+        return iUserInfoService.remove(new QueryWrapper<UserInfo>().eq("user_id",userId));
     }
 
     @Override
@@ -213,5 +214,25 @@ public class UserServiceImpl implements UserService {
             throw new BizException(ErrorEnum.SYS_PARAM_ERROR);
         }
         return iUserInfoService.getByEntityId(userId,"userId");
+    }
+
+    @Override
+    public boolean setRoleIsAdmin(String userId) {
+        if (StringUtils.isBlank(userId)){
+            throw new BizException(ErrorEnum.SYS_PARAM_ERROR);
+        }
+        UserInfo userInfo = iUserInfoService.getByEntityId(userId,"userId");
+        if (Objects.isNull(userInfo)){
+            throw new BizException(ErrorEnum.SYS_QUERY_DATA_IS_NULL.getCode(),"用户不存在");
+        }
+        if (userInfo.getRole().equals(UserRoleEnum.ADMIN.getValue())){
+            throw new BizException(ErrorEnum.SYS_ILLEGAL_OPERATION.getCode(),"该用户已经是管理员");
+        }
+        if (userInfo.getRole().equals(UserRoleEnum.TEACHER.getValue())){
+            return iUserInfoService.update(new UpdateWrapper<UserInfo>()
+                    .set("role",UserRoleEnum.ADMIN.getValue()).eq("user_id",userId));
+        }else{
+            throw new BizException(ErrorEnum.SYS_ILLEGAL_OPERATION.getCode(),"该用户不能设为管理员");
+        }
     }
 }

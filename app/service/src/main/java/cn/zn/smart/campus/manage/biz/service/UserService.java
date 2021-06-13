@@ -86,7 +86,7 @@ public interface UserService {
      * @param mapId
      * @return
      */
-    public boolean deleteByMapId(String mapId);
+    public boolean delete(String userId);
 
     /**
      * 根据mapId批量删除
@@ -94,7 +94,6 @@ public interface UserService {
      * @return
      */
     public boolean deleteByMapIds(List<String> mapIdList);
-
 
     /**
      * 更新信息
@@ -123,4 +122,11 @@ public interface UserService {
      * @return
      */
     public UserInfo get(String userId);
+
+    /**
+     * 设置教师为管理员
+     * @param userId
+     * @return
+     */
+    public boolean setRoleIsAdmin(String userId);
 }
