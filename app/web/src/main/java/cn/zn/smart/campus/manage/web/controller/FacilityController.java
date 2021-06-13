@@ -1,5 +1,6 @@
 package cn.zn.smart.campus.manage.web.controller;
 
+import cn.zn.smart.campus.manage.biz.dto.FacilityBorrowRecordDTO;
 import cn.zn.smart.campus.manage.biz.dto.FacilityDTO;
 import cn.zn.smart.campus.manage.biz.exception.BizException;
 import cn.zn.smart.campus.manage.biz.exception.ErrorEnum;
@@ -104,6 +105,15 @@ public class FacilityController {
                 Map<String,List<Facility>> map =  list.stream().collect(Collectors.groupingBy(Facility::getType));
                 return Result.succeed(map);
             }
+        }catch (BizException e){
+            return Result.fail(e.getCode(),e.getMsg());
+        }
+    }
+
+    @GetMapping("/get/borrowingRecord")
+    public Result<List<FacilityBorrowRecordDTO>> getBorrowingRecord(@RequestParam("studentId")String studentId){
+        try {
+            return Result.succeed(facilityBizService.getByBorrowStudentId(studentId));
         }catch (BizException e){
             return Result.fail(e.getCode(),e.getMsg());
         }

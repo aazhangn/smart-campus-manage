@@ -53,4 +53,8 @@ public class FacilityServiceTest extends BaseTest {
     public void returnTest(){
         facilityBizService.returnFacility("fac_aceee3b62af9464883e12e72b7201dd6");
     }
+    @Test
+    public void getByBorrowStudentId(){
+        System.out.println(JSON.toJSONString(facilityBizService.getByBorrowStudentId("20170601")));
+    }
 }

@@ -1,5 +1,6 @@
 package cn.zn.smart.campus.manage.biz.service;
 
+import cn.zn.smart.campus.manage.biz.dto.FacilityBorrowRecordDTO;
 import cn.zn.smart.campus.manage.biz.dto.FacilityDTO;
 import cn.zn.smart.campus.manage.dao.page.QueryPage;
 import cn.zn.smart.campus.manage.dao.page.ResultPage;
@@ -74,6 +75,13 @@ public interface FacilityBizService {
      * @return
      */
     public boolean returnFacility(String facilityId);
+
+    /**
+     * 根据借用人id
+     * @param studentId
+     * @return
+     */
+    public List<FacilityBorrowRecordDTO> getByBorrowStudentId(String studentId);
 
 
 }

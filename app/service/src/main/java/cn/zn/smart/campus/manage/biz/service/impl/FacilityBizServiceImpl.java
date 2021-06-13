@@ -1,5 +1,6 @@
 package cn.zn.smart.campus.manage.biz.service.impl;
 
+import cn.zn.smart.campus.manage.biz.dto.FacilityBorrowRecordDTO;
 import cn.zn.smart.campus.manage.biz.dto.FacilityDTO;
 import cn.zn.smart.campus.manage.biz.enums.facility.FacilityStatusEnum;
 import cn.zn.smart.campus.manage.biz.exception.BizException;
@@ -170,6 +171,31 @@ public class FacilityBizServiceImpl implements FacilityBizService {
         updateWrapper1.eq("borrow_record_id",record.getBorrowRecordId()).set("return_time",new Date());
         boolean f2 = iFacilityBorrowRecordService.update(updateWrapper1);
         return f1 && f2;
+    }
+
+    @Override
+    public List<FacilityBorrowRecordDTO> getByBorrowStudentId(String studentId) {
+        if (StringUtils.isBlank(studentId)){
+            throw new BizException(ErrorEnum.SYS_PARAM_ERROR);
+        }
+        //查询未归还的借用记录
+        List<FacilityBorrowRecord> records = iFacilityBorrowRecordService.list(new QueryWrapper<FacilityBorrowRecord>()
+                .eq("student_id",studentId).isNull("return_time"));
+        List<FacilityBorrowRecordDTO> returnRecords = new ArrayList<>();
+        for (FacilityBorrowRecord r:records){
+            Facility facility = iFacilityService.getByEntityId(r.getFacilityId(),"facilityId");
+            if (Objects.isNull(facility)){
+                throw new BizException(ErrorEnum.SYS_QUERY_DATA_IS_NULL.getCode(),"设施不存在");
+            }
+            //核对使用状态
+            if (facility.getStatus().equals(FacilityStatusEnum.BUSY.getStatus())){
+                FacilityBorrowRecordDTO returnRecord = new FacilityBorrowRecordDTO();
+                BeanUtils.copyProperties(r,returnRecord);
+                BeanUtils.copyProperties(facility,returnRecord);
+                returnRecords.add(returnRecord);
+            }
+        }
+        return returnRecords;
     }
 
     private List<Facility> getFacilityList(List<FacilityDTO> facilityDtoList) {
